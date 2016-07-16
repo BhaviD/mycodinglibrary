@@ -5,13 +5,13 @@ using namespace std;
 struct ListNode
 {
     int dest;
-	ListNode* next;
+    ListNode* next;
 
-	ListNode(int nDest = 0)
-	{
-		dest = nDest;
-		next = NULL;
-	}
+    ListNode(int nDest = 0)
+    {
+        dest = nDest;
+        next = NULL;
+    }
 };
 
 class Graph
@@ -23,59 +23,59 @@ class Graph
         Graph(int N)
         {
             V = N;
-			adjList = new ListNode*[V];
+            adjList = new ListNode*[V];
             for (int i = 0; i < V; ++i)
-				adjList[i] = NULL;
+                adjList[i] = NULL;
         }
 
-		~Graph()
-		{
-			ListNode* pCrawl{ NULL };
-			ListNode* deleteNode{ NULL };
+        ~Graph()
+        {
+            ListNode* pCrawl{ NULL };
+            ListNode *deleteNode{ NULL };
 
-			for (int v = 0; v < V; ++v)
-			{
-				pCrawl = adjList[v];
-				while (pCrawl)
-				{
-					deleteNode = pCrawl;
-					pCrawl = pCrawl->next;
+            for (int v = 0; v < V; ++v)
+            {
+                pCrawl = adjList[v];
+                while (pCrawl)
+                {
+                    deleteNode = pCrawl;
+                    pCrawl = pCrawl->next;
 
-					delete deleteNode;
-				}
-			}
+                    delete deleteNode;
+                }
+            }
 
-			delete[] adjList;
-		}
+            delete[] adjList;
+        }
 
-		void addEdge(int, int);
-		void printGraph();
+        void addEdge(int, int);
+        void printGraph();
 };
 
 void Graph::addEdge(int u, int v)
 {
-	ListNode* newNode = new ListNode(v);
-	newNode->next = adjList[u];
-	adjList[u] = newNode;
+    ListNode* newNode = new ListNode(v);
+    newNode->next = adjList[u];
+    adjList[u] = newNode;
 
-	newNode = new ListNode(u);
-	newNode->next = adjList[v];
-	adjList[v] = newNode;
+    newNode = new ListNode(u);
+    newNode->next = adjList[v];
+    adjList[v] = newNode;
 }
 
 void Graph::printGraph()
 {
-	for (int v = 0; v < V; ++v)
-	{
-		ListNode* pCrawl = adjList[v];
-		cout << "\n Adjacency list of vertex " << v << "\n head ";
-		while (pCrawl)
-		{
-			cout << "-> " << pCrawl->dest;
-			pCrawl = pCrawl->next;
-		}
-		cout << endl;
-	}
+    for (int v = 0; v < V; ++v)
+    {
+        ListNode* pCrawl = adjList[v];
+        cout << "\n Adjacency list of vertex " << v << "\n head ";
+        while (pCrawl)
+        {
+            cout << "-> " << pCrawl->dest;
+            pCrawl = pCrawl->next;
+        }
+        cout << endl;
+    }
 }
 
 int main()
