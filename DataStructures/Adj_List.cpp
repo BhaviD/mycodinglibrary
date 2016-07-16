@@ -48,6 +48,7 @@ int main()
     Graph gh(5);
     gh.addEdge(0, 1);
     gh.addEdge(0, 2);
+    gh.addEdge(0, 3);
     gh.addEdge(0, 4);
     gh.addEdge(1, 2);
     gh.addEdge(1, 3);
