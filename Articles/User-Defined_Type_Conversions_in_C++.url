@@ -1,0 +1,6 @@
+User-Defined Type Conversions (C++) -
+https://msdn.microsoft.com/en-us/library/wwywka61.aspx
+
+Also:
+--> converters - Page 105: "Data Structures with C++ using STL" by William Topp and William Ford.
+--> explicit Constructors - Page 457: "The C++ Programming Language" by Bjarne Stroustrup
