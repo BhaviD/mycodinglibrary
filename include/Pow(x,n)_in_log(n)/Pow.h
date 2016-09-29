@@ -3,6 +3,9 @@
 
 enum class Computation_Method {Iterative, Recursive};
 
+long long IterativePow(int x, int n);
+long long RecursivePow(int x, int n);
+
 long long IterativePow(int x, int n)
 {
     long long res = 1;
