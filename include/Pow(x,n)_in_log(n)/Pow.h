@@ -3,7 +3,7 @@
 
 enum class Computation_Method {Iterative, Recursive};
 
-long long Pow(int x, int n);
+long long Pow(int x, int n, Computation_Method method);
 long long IterativePow(int x, int n);
 long long RecursivePow(int x, int n);
 
