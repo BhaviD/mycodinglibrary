@@ -1,5 +1,7 @@
+// Build Command:
+// g++ test_multibase_output.cpp -I../../include/MultiBase_Output
+
 #include <iostream>
-#include <string>
 #include "Multibase_Output.h"
 
 using namespace std;
