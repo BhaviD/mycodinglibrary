@@ -1,3 +1,6 @@
+// Build Command:
+// g++ test_gcd.cpp -I../../include/GCD
+
 // the program prompts the user to input a rational
 // number in the form p/q and displays it as a mixed number.
 
