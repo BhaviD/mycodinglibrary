@@ -1,3 +1,6 @@
+// Build Command:
+// g++ test_tower_of_hanoi.cpp -I../../include/Hanoi
+
 // prompt for the number of disks and call the function
 // hanoi() to solve the Tower of Hanoi puzzle
 
