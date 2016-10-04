@@ -11,7 +11,7 @@ using namespace std;
 
 int main()
 {
-    int numerator, denominator, wholePart, remainder, divisor;
+    int numerator, denominator, wholePart, remnder, divisor;
     char slash;
 
     cout << "Enter a rational number (numerator/denominator): ";
@@ -19,9 +19,9 @@ int main()
 
     // compute the quotient (whole part) and the remainder
     wholePart = numerator / denominator;
-    remainder = numerator % denominator;
+    remnder = numerator % denominator;
 
-    if (remainder == 0)
+    if (remnder == 0)
         // the rational number is an integer
         cout << wholePart << endl;
     else
@@ -33,10 +33,10 @@ int main()
 
         // compute the greatest common divisor of the remainder
         // and the divisor
-        divisor = gcd(remainder, denominator);
+        divisor = gcd(remnder, denominator);
         // output the fractional part in lowest terms by dividing
         // the remainder and divisor by their gcd
-        cout << remainder/divisor << '/' << denominator/divisor
+        cout << remnder/divisor << '/' << denominator/divisor
               << endl;
     }
 
