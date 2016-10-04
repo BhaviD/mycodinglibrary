@@ -1,0 +1,5 @@
+Formula for finding nth Fibobacci Number:
+http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibFormula.html#section1
+
+The number of function calls necessary for the evaluation of fib(n) using recursion:
+-- "Data Structures with C++ using STL", Second Edition, Page #166
