@@ -8,12 +8,12 @@ using us = std::chrono::microseconds;
 using ms = std::chrono::milliseconds;
 using s = std::chrono::seconds;
 
-class timer
+class Timer
 {
     public:
         // initialize the timer.
         // Postconditions: set the starting and ending event times to 0.
-        timer();
+        Timer();
         
         // start timing an event.
         // Postcondition:   record the current time as the starting time
@@ -40,35 +40,35 @@ class timer
 };
 
 // constructor. set starting and ending times to 0
-timer::timer(): startTime{}, endTime{}
+Timer::Timer(): startTime{}, endTime{}
 {}
 
 // determine clock ticks at start
-void timer::start()
+void Timer::start()
 {
    startTime = CLOCK::now();
 }
 
 // determine clock ticks at end
-void timer::stop()
+void Timer::stop()
 {
    endTime = CLOCK::now();
 }
 
 // return the elapsed time in microseconds
-int timer::duration_in_microseconds() const
+int Timer::duration_in_microseconds() const
 {
    return std::chrono::duration_cast<us>(endTime - startTime).count();
 }
 
 // return the elapsed time in milliseconds
-int timer::duration_in_milliseconds() const
+int Timer::duration_in_milliseconds() const
 {
    return std::chrono::duration_cast<ms>(endTime - startTime).count();
 }
 
 // return the elapsed time in seconds
-int timer::duration_in_seconds() const
+int Timer::duration_in_seconds() const
 {
    return std::chrono::duration_cast<s>(endTime - startTime).count();
 }
