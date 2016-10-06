@@ -97,6 +97,17 @@ void DoubleEndedSelectionSort(T arr[], int n)
                 largeIndex = j;
         }
 
+        // if smallIndex is the last element and largeIndex is the
+        // first element of the pass, then swap them and continue
+        if(smallIndex == n - 1 - pass && 
+           largeIndex == pass)
+        {
+            temp = arr[smallIndex];
+            arr[smallIndex] = arr[largeIndex];
+            arr[largeIndex] = temp;
+            continue;
+        }
+
         // if smallIndex and pass are not the same location,
         // exchange the smallest item in the sublist with arr[pass]
         if (smallIndex != pass)
