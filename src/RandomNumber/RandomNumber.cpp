@@ -1,5 +1,5 @@
 #include <ctime>
-#include "Random.h"
+#include "RandomNumber.h"
 
 randomNumber::randomNumber(long s) : seed{s}
 {

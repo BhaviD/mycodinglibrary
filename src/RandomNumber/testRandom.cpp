@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "Random.h"
+#include "RandomNumber.h"
 using namespace std;
 
 int main()
