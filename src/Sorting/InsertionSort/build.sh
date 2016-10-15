@@ -1,8 +1,8 @@
-export SRC="test_insertion_sort.cpp"
-export SRC="$SRC ../../RandomNumber/RandomNumber.cpp"
+SRC="test_insertion_sort.cpp"
+SRC="$SRC ../../RandomNumber/RandomNumber.cpp"
 
-export INC=-I../../../include/Sorting/InsertionSort/
-export INC="$INC -I../../../include/RandomNumber/"
-export INC="$INC -I../../../include/WriteContainer/"
+INC="-I../../../include/Sorting/InsertionSort/"
+INC="$INC -I../../../include/RandomNumber/"
+INC="$INC -I../../../include/WriteContainer/"
 
 g++ -std=c++11 $SRC $INC

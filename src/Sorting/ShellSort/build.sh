@@ -1,10 +1,10 @@
-export SRC=test_shell_sort.cpp
+SRC=test_shell_sort.cpp
 
-export includedir="../../../include"
-export INC="-I$includedir/Sorting/BubbleSort"
-export INC="$INC -I$includedir/Sorting/SelectionSort"
-export INC="$INC -I$includedir/Sorting/ShellSort"
-export INC="$INC -I$includedir/Timer"
-export INC="$INC -I$includedir/WriteContainer"
+includedir="../../../include"
+INC="-I$includedir/Sorting/BubbleSort"
+INC="$INC -I$includedir/Sorting/SelectionSort"
+INC="$INC -I$includedir/Sorting/ShellSort"
+INC="$INC -I$includedir/Timer"
+INC="$INC -I$includedir/WriteContainer"
 
 g++ -std=c++11 $SRC $INC
