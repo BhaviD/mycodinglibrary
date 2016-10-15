@@ -20,7 +20,7 @@ int main()
     cout << endl << endl;
 
     t.start();
-    selectionSort(arr1, 14);
+    SelectionSort(arr1, 14);
     t.stop();
     cout << "Selection Sort took: " << t.duration_in_microseconds() << " microseconds" << endl;
     for(int i = 0; i < 14; ++i)
