@@ -13,7 +13,7 @@ template <typename T>
 std::vector<T>& Matrix<T>::operator[] (int i)
 {
     if (i < 0 || i >= nRows)
-        throw indexRangeError(
+        throw IndexRangeError(
             "Matrix: invalid row index", i, nRows);
 
    return mat[i];
@@ -25,7 +25,7 @@ template <typename T>
 const std::vector<T>& Matrix<T>::operator[] (int i) const
 {
     if (i < 0 || i >= nRows)
-        throw indexRangeError(
+        throw IndexRangeError(
             "Matrix: invalid row index", i, nRows);
 
    return mat[i];
