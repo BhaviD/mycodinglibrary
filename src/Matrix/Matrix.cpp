@@ -63,3 +63,45 @@ void Matrix<T>::resize(int numRows, int numCols)
     for (i = 0; i < nRows; ++i)
         mat[i].resize(nCols);
 }
+
+Matrix<T> operator+(const Matrix<T>& left, const Matrix<T>& right)
+{
+    if(left.nRows != right.nRows ||
+       left.nCols != right.nCols)
+    {
+        // throw exception.
+    }
+    
+    int rows = left.nRows;
+    int cols = left.nCols;
+    Matrix<T> result(rows, cols);
+    for(int i = 0; i < rows; ++i)
+    {
+        for(int j = 0; j < cols; ++j)
+        {
+            result[i][j] = left[i][j] + right[i][j];
+        }
+    }
+    return result;
+}
+
+Matrix<T> operator-(const Matrix<T>& left, const Matrix<T>& right)
+{
+    if(left.nRows != right.nRows ||
+       left.nCols != right.nCols)
+    {
+        // throw exception.
+    }
+    
+    int rows = left.nRows;
+    int cols = left.nCols;
+    Matrix<T> result(rows, cols);
+    for(int i = 0; i < rows; ++i)
+    {
+        for(int j = 0; j < cols; ++j)
+        {
+            result[i][j] = left[i][j] - right[i][j];
+        }
+    }
+    return result;
+}

@@ -33,6 +33,9 @@ class Matrix
         // any new elements are filled with the default value of type T
         void resize(int numRows, int numCols);
 
+        friend Matrix<T> operator+(const Matrix<T>& mat1, const Matrix<T>& mat2);
+        friend Matrix<T> operator-(const Matrix<T>& mat1, const Matrix<T>& mat2);
+
     private:
         int nRows, nCols;
 
