@@ -2,6 +2,7 @@
 #define _WRITE_CONTAINER_H_
 
 #include <vector>
+#include "Matrix.h"
 
 // template function to output an n element array of type T
 template <typename T>
@@ -29,6 +30,19 @@ void WriteVector(const std::vector<T>& v)
     for(i = 0; i < n; ++i)
         std::cout << v[i] << "  ";
     std::cout << std::endl;
+}
+
+template <typename T>
+void WriteMatrix(const Matrix<T>& mat)
+{
+    int rows = mat.rows();
+    int cols = mat.cols();
+    for(int i = 0, i < rows, ++i)
+    {
+        for(int j = 0; j < cols; ++j)
+            std::cout << mat[i][j] << " ";
+        std::cout << std::endl;
+    }
 }
 
 #endif
