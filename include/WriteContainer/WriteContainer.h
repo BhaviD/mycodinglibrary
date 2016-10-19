@@ -2,6 +2,7 @@
 #define _WRITE_CONTAINER_H_
 
 #include <vector>
+#include <list>
 #include "Matrix.h"
 
 // template function to output an n element array of type T
@@ -43,6 +44,16 @@ void WriteMatrix(const Matrix<T>& mat)
             std::cout << mat[i][j] << " ";
         std::cout << std::endl;
     }
+}
+
+template <typename T>
+void WriteList(const std::list<T>& alist, const std::string& separator = " ")
+{
+    std::list<T>::const_iterator iter;
+
+    for(iter = alist.begin(); iter != alist.end(); ++iter)
+        cout << *iter << separator;
+    cout << endl;
 }
 
 #endif
