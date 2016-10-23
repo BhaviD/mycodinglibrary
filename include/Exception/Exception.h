@@ -38,4 +38,31 @@ class IndexRangeError: public BaseException
         }
 };
 
+// attempt to erase from an empty container
+class UnderflowError: public BaseException
+{
+    public:
+        UnderflowError(const string& msg = ""):
+            BaseException(msg)
+        {}
+};
+
+// attempt to insert into a full container
+class OverflowError: public BaseException
+{
+    public:
+        OverflowError(const string& msg = ""):
+            BaseException(msg)
+        {}
+};
+
+// error in expression evaluation
+class ExpressionError: public BaseException
+{
+    public:
+        ExpressionError(const string& msg = ""):
+            BaseException(msg)
+        {}
+};
+
 #endif
