@@ -1,37 +1,40 @@
 #ifndef _EXCEPTION_H_
 #define _EXCEPTION_H_
 
+#include <string>
+#include <sstream>
+
 class BaseException
 {
     public:
-        BaseException(const string& str = ""):
+        BaseException(const std::string& str = ""):
             msgString(str)
         {
             if (msgString == "")
                 msgString = "Unspecified exception";
         }
 
-        string what() const
+        std::string what() const
         {
             return msgString;
         }
 
     // protected allows a derived class to access msgString.
     protected:
-        string msgString;
+        std::string msgString;
 };
 
 // index out of range
 class IndexRangeError: public BaseException
 {
     public:
-        IndexRangeError(const string& msg, int i, int size):
+        IndexRangeError(const std::string& msg, int i, int size):
             BaseException()
         {
-            char indexString[80];
-            ostrstream indexErr(indexString, 80);
+            std::string indexString;
+            std::ostringstream indexErr;
 
-            indexErr << msg << "  index " << i << "  size = " << size << ends;
+            indexErr << msg << "  index " << i << "  size = " << size << std::ends;
             // IndexRangeError can modify msgString, since it is in
             // the protected section of BaseException
             msgString = indexString;
@@ -42,7 +45,7 @@ class IndexRangeError: public BaseException
 class UnderflowError: public BaseException
 {
     public:
-        UnderflowError(const string& msg = ""):
+        UnderflowError(const std::string& msg = ""):
             BaseException(msg)
         {}
 };
@@ -51,7 +54,7 @@ class UnderflowError: public BaseException
 class OverflowError: public BaseException
 {
     public:
-        OverflowError(const string& msg = ""):
+        OverflowError(const std::string& msg = ""):
             BaseException(msg)
         {}
 };
@@ -60,7 +63,7 @@ class OverflowError: public BaseException
 class ExpressionError: public BaseException
 {
     public:
-        ExpressionError(const string& msg = ""):
+        ExpressionError(const std::string& msg = ""):
             BaseException(msg)
         {}
 };
