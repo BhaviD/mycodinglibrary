@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 #include <stack>
-//#include <ctype.h>
 
 #include "ExpressionSymbol.h"   // ExpressionSymbol class
 #include "Exception.h"   // for ExpressionError exception
