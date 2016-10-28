@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <list>
-#include "Matrix.h"
+#include "Matrix/Matrix.h"
 
 // template function to output an n element array of type T
 template <typename T>
@@ -38,7 +38,7 @@ void WriteMatrix(const Matrix<T>& mat)
 {
     int rows = mat.rows();
     int cols = mat.cols();
-    for(int i = 0, i < rows, ++i)
+    for(int i = 0; i < rows; ++i)
     {
         for(int j = 0; j < cols; ++j)
             std::cout << mat[i][j] << " ";
@@ -49,11 +49,12 @@ void WriteMatrix(const Matrix<T>& mat)
 template <typename T>
 void WriteList(const std::list<T>& alist, const std::string& separator = " ")
 {
-    std::list<T>::const_iterator iter;
+    //typename std::list<T>::const_iterator iter;
+    auto iter = alist.begin();
 
     for(iter = alist.begin(); iter != alist.end(); ++iter)
-        cout << *iter << separator;
-    cout << endl;
+        std::cout << *iter << separator;
+    std::cout << std::endl;
 }
 
 #endif

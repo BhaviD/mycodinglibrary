@@ -1,8 +1,5 @@
-// Build command: 
-// g++ test_timer.cpp -std=c++11 -I../../include/Timer
-
 #include <iostream>
-#include "Timer.h"
+#include "Timer/Timer.h"
 using namespace std;
 
 void consume_time()
@@ -14,7 +11,7 @@ void consume_time()
 
 int main()
 {
-    timer t;
+    Timer t;
     t.start();
     consume_time();
     t.stop();

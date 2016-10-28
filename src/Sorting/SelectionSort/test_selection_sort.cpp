@@ -1,9 +1,6 @@
-// Build Command:
-// g++ test_selection_sort.cpp -std=c++11 -I../../../include/Sorting/SelectionSort/ -I../../../include/Timer
-
 #include <iostream>
-#include "SelectionSort.h"
-#include "Timer.h"
+#include "Sorting/SelectionSort/SelectionSort.h"
+#include "Timer/Timer.h"
 
 using namespace std;
 

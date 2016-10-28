@@ -4,9 +4,8 @@
 #include <iostream>
 #include <string>
 #include <stack>
-
-#include "ExpressionSymbol.h"   // ExpressionSymbol class
-#include "Exception.h"   // for ExpressionError exception
+#include "Infix2Postfix/ExpressionSymbol/ExpressionSymbol.h"   // ExpressionSymbol class
+#include "Exception/Exception.h"   // for ExpressionError exception
 
 // labels designating the parentheses characters
 const char lParen  = '(', rParen = ')';

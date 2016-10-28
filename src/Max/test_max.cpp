@@ -8,11 +8,9 @@
  *  Hence, always return a reference from max() function.
  */
 
-// BUILD COMMAND - "g++ test_max.cpp -I../../include/Max"
-
 #include <iostream>
 #include <string>
-#include "Max.h"
+#include "Max/Max.h"
 using namespace std;
 
 int main()

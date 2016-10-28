@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
 
-#include "Infix2Postfix.h"       // Infix2Postfix class
-#include "PostfixEval.h"         // PostfixEval class
-#include "Exception.h"         // PostfixEval class
+#include "Infix2Postfix/Infix2Postfix.h"       // Infix2Postfix class
+#include "PostfixEval/PostfixEval.h"         // PostfixEval class
+#include "Exception/Exception.h"         // PostfixEval class
 
 using namespace std;
 
@@ -20,7 +20,7 @@ int main()
     // user enters an empty string
 
     // get the first expression
-    cout << "Enter an infix expression: ";
+    cout << "Enter an infix expression (Empty string to exit): ";
     getline(cin, infixExp);
 
     while (infixExp != "")
@@ -51,7 +51,7 @@ int main()
             cout << ee.what() << endl << endl;
         }
         // input another expression
-        cout << "Enter an infix expression: ";
+        cout << "Enter an infix expression (Empty string to exit): ";
         getline(cin, infixExp);
     }
 

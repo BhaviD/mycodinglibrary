@@ -1,5 +1,5 @@
-#include "Matrix.h"
-#include "Exception.h"
+#include "Matrix/Matrix.h"
+#include "Exception/Exception.h"
 
 template <typename T>
 Matrix<T>::Matrix(int numRows, int numCols, const T& initVal):

@@ -2,7 +2,7 @@
 // g++ test_multibase_output.cpp -I../../include/MultiBaseOutput
 
 #include <iostream>
-#include "MultibaseOutput.h"
+#include "MultibaseOutput/MultibaseOutput.h"
 
 using namespace std;
 

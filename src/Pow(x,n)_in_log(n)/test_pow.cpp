@@ -1,14 +1,11 @@
-// Build Command - 
-// g++ test_pow.cpp -std=c++11 -I../../include/Pow\(x,n\)_in_log\(n\) -I../../include/Timer
-
 #include <iostream>
-#include "Timer.h"
-#include "Pow.h"
+#include "Timer/Timer.h"
+#include "Pow(x,n)_in_log(n)/Pow.h"
 using namespace std;
 
 int main()
 {
-    timer t;
+    Timer t;
     t.start();
     cout << "x = " << Pow(3, 30, Computation_Method::Iterative) << endl;
     t.stop();

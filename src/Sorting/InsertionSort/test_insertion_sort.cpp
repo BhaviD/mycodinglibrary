@@ -14,9 +14,9 @@
 #include <iostream>
 #include <vector>
 
-#include "RandomNumber.h"
-#include "InsertionSort.h"
-#include "WriteContainer.h"         // for WriteVector()
+#include "RandomNumber/RandomNumber.h"
+#include "Sorting/InsertionSort/InsertionSort.h"
+#include "WriteContainer/WriteContainer.h"         // for WriteVector()
 
 using namespace std;
 
@@ -29,7 +29,7 @@ int main()
     // declare 3 integer vectors
     vector<int> vSmall, vMedium, vLarge;
     // use a random number generator
-    randomNumber rnd;
+    RandomNumber rnd;
 
     int i, value;
 

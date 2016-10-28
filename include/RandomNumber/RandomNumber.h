@@ -1,12 +1,14 @@
 #ifndef _RANDOM_H_
 #define _RANDOM_H_
 
+#include <ctime>
+
 // generate random numbers
-class randomNumber
+class RandomNumber
 {
 public:
     // initialize the random number generator
-    randomNumber(long s = 0);
+    RandomNumber(long s = 0);
 
     // return a 32-bit random integer m, 1 <= m <= 2^31-2
     long random();
@@ -25,5 +27,32 @@ private:
 //    static const long Q = M / A;
 //    static const long R = M % A;
 };
+
+RandomNumber::RandomNumber(long s) : seed{s}
+{
+    if(seed == 0)
+    {
+        seed = ((long)time(0) % M);
+    }
+}
+
+long RandomNumber::random()
+{
+    long long product = A * seed;
+    seed = (long)(product % M);
+    return seed;
+}
+
+long RandomNumber::random(long n)
+{
+    long randomNo = random();
+    return randomNo % n;
+}
+
+double RandomNumber::frandom()
+{
+    long randomNo = random();
+    return (double)randomNo / M;
+}
 
 #endif

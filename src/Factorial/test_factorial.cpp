@@ -1,8 +1,5 @@
-// Build command:
-// g++ test_factorial.cpp -std=c++11 -I../../include/Factorial
-
 #include <iostream>
-#include "factorial.h"
+#include "Factorial/factorial.h"
 
 using namespace std;
 
@@ -10,10 +7,10 @@ int main()
 {
     int n = 0;
     long long fact = 0;
-    cout << "Enter 4 positive integers [0, 20]: ";
-    for(int i = 0; i < 4; ++i)
+    cout << "Enter a positive integer <= 20 (-1 to exit): ";
+    cin >> n;
+    while(n != -1)
     {
-        cin >> n;
         if(n > 20)
         {
             cerr << "Invalid Input [n = " << n << "] !!" << endl;
@@ -25,6 +22,8 @@ int main()
             cout << n << "! = " << fact << "    (recursive computation)" << endl;
             cout << n << "! = " << IterativeFactorial(n) << "    (iterative computation)" << endl;
         }
+        cout << "Enter a positive integer <= 20 (-1 to exit): ";
+        cin >> n;
     }
     return 0;
 }

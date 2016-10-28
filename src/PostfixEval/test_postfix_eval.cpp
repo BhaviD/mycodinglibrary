@@ -1,5 +1,5 @@
 #include <iostream>
-#include "PostfixEval.h"
+#include "PostfixEval/PostfixEval.h"
 using namespace std;
 
 int main()
@@ -16,7 +16,7 @@ int main()
     try
     {
         cout << "The value of the expression = "
-             << exp.evaluate() << endl << endl;
+             << exp.evaluate() << endl;
     }
     // catch block output the error using what()
     catch (const ExpressionError& ee)
