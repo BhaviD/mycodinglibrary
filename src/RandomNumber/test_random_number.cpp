@@ -1,11 +1,11 @@
 #include <iostream>
 #include <fstream>
-#include "RandomNumber.h"
+#include "RandomNumber/RandomNumber.h"
 using namespace std;
 
 int main()
 {
-    randomNumber rndm1, rndm2(50);
+    RandomNumber rndm1, rndm2(50);
     
     ofstream fout("output.txt", ios_base::trunc);
     for(int i = 0; i < 50; ++i)
