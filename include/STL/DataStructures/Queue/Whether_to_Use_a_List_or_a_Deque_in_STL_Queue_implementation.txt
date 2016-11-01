@@ -1,0 +1,6 @@
+The list-class implementation add each item to the list as an individual element.
+As pop() operations erase elements, the list class reclaims the memory and efficiently
+reuses it for subsequent insertions. By contrast, a deque allocates memory in blocks
+and performs insert and erase operations in a fashion similar to a vector. Generally,
+the deque implementation will be faster. However, the programmer should try the application
+both ways and determine which implementation performs the best.
