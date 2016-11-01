@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
 
-#include "Infix2Postfix/Infix2Postfix.h"       // Infix2Postfix class
-#include "PostfixEval/PostfixEval.h"         // PostfixEval class
-#include "Exception/Exception.h"         // PostfixEval class
+#include "Infix2Postfix.h"       // Infix2Postfix class
+#include "PostfixEval.h"         // PostfixEval class
+#include "Exception.h"         // PostfixEval class
 
 using namespace std;
 

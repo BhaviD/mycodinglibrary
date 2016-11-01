@@ -1,0 +1,10 @@
+Each of the underlying storage structures for a stack has different
+performance criteria. Hence, a programmer should choose the container
+most suited to the application. In general, a vector is the most
+efficient for relatively small stacks. A vector loses efficiency when
+it must frequently be resized to accommodate the size of the stack.
+In this case, the deque container is a better choice; the deque
+manages memory more efficiently than a vector. A list container is
+specifically designed to allow for general insertion and deletion at
+any position. Because a stack does not use this feature, there is
+little reason for using a list to store the stack's elements.

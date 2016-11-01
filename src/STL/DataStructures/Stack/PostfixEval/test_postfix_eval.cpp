@@ -1,5 +1,5 @@
 #include <iostream>
-#include "PostfixEval/PostfixEval.h"
+#include "PostfixEval.h"
 using namespace std;
 
 int main()
