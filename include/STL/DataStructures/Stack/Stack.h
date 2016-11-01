@@ -4,8 +4,6 @@
 #include <vector>        // vector class used by object composition
 #include "Exception.h"   // for UnderflowError exception
 
-//using namespace std;
-
 template <typename T>
 class Stack
 {
@@ -42,7 +40,7 @@ class Stack
 
     private:
         // a vector object maintains the stack items and size
-        vector<T> stackVector;
+        std::vector<T> stackVector;
 };
 
 // the constructor has nothing to do. the default
