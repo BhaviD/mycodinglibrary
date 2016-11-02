@@ -3,7 +3,9 @@
 
 #include <vector>
 #include <list>
-#include "Matrix/Matrix.h"
+#include "Matrix.h"
+#include "Node.h"
+#include "DNode.h"
 
 // template function to output an n element array of type T
 template <typename T>
@@ -55,6 +57,37 @@ void WriteList(const std::list<T>& alist, const std::string& separator = " ")
     for(iter = alist.begin(); iter != alist.end(); ++iter)
         std::cout << *iter << separator;
     std::cout << std::endl;
+}
+
+// output a singly linked list with each element followed by separator
+template <typename T>
+void WriteLinkedList(Node<T> *front, const std::string& separator = "  ")
+{
+   // front points at first Node.  curr moves through the list
+   Node<T> *curr;
+
+   curr = front;           // set curr to front of the list
+   while (curr)    // continue until and of list
+   {
+      // output Node value and move to the next Node
+      cout << curr->nodeValue << separator;
+      curr = curr->next;
+   }
+}
+
+// output a doubly linked list with each element followed by separator
+template <typename T>
+void WriteDLinkedList(DNode<T> *header, const std::string& separator = "  ")
+{
+   // header points at first DNode.  p moves through the list
+   DNode<T> *p = header->next ;
+
+   while (p != header)    // continue until end of list
+   {
+      // output DNode value and move to the next DNode
+      cout << p->nodeValue << separator;
+      p = p->next;
+   }
 }
 
 #endif
