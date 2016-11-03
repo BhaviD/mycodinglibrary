@@ -13,7 +13,6 @@
 
 #include "TNode.h"        // use TNode class
 
-//using namespace std;
 
 #if 0
 // objects hold a formatted label string and the level,column
@@ -54,24 +53,24 @@ void LevelOrderOutput(TNode<T> *t, const std::string& separator = " ");
 
 // accumulate the number of leaf nodes in count
 template <typename T>
-void countLeaf(TNode<T> *t, int& count);
+void CountLeaf(TNode<T> *t, int& count);
 
 // return the depth of the binary tree
 template <typename T>
-int depth (TNode<T> *t);
+int Depth (TNode<T> *t);
 
 // create copy of tree t and return a pointer to the new root
 template <typename T>
-TNode<T> *copyTree(TNode<T> *t);
+TNode<T> *CopyTree(TNode<T> *t);
 
 // traverse the nodes in the binary tree and delete each node
 template <typename T>
-void deleteTree(TNode<T> *t);
+void DeleteTree(TNode<T> *t);
 
-// delete all tree nodes using deleteTree() and then assign
+// delete all tree nodes using DeleteTree() and then assign
 // t to be NULL
 template <typename T>
-void clearTree(TNode<T> * & t);
+void ClearTree(TNode<T> * & t);
 
 #if 0
 // recursive InOrder scan used to build the shadow tree
@@ -188,35 +187,35 @@ void LevelOrderOutput(TNode<T> *t, const std::string& separator)
 
 // assume that count initialized to 0
 template <typename T>
-void countLeaf (TNode<T> *t, int& count)
+void CountLeaf (TNode<T> *t, int& count)
 {
-   if (t != NULL)
+   if (t)
    {
       // check if t is a leaf node (no children).
       // if so, increment count
       if (t->left == NULL && t->right == NULL)
          count++;
 
-        countLeaf(t->left, count);      // descend left
-        countLeaf(t->right, count); // descend right
+        CountLeaf(t->left, count);  // descend left
+        CountLeaf(t->right, count); // descend right
    }
 }
 
 // determine the depth of the tree using a PostOrder scan
 template <typename T>
-int depth (TNode<T> *t)
+int Depth (TNode<T> *t)
 {
    int depthLeft, depthRight, depthval;
 
-   if (t == NULL)
+   if (NULL == t)
         // depth of an empty tree is -1
       depthval = -1;
    else
     {
         // find the depth of the left subtree of t
-        depthLeft= depth(t->left);
+        depthLeft = Depth(t->left);
         // find the depth of the right subtree of t
-        depthRight= depth(t->right);
+        depthRight = Depth(t->right);
         // depth of the tree with root t is 1 + maximum
         // of the depths of the two subtrees
         depthval = 1 +
@@ -227,50 +226,54 @@ int depth (TNode<T> *t)
 }
 
 template <typename T>
-TNode<T> *copyTree(TNode<T> *t)
+TNode<T> *CopyTree(TNode<T> *t)
 {
-   // newNode points at a new node that the algorithm
+    // newNode points at a new node that the algorithm
     // creates. newLptr. and newRptr point to the subtrees
     // of newNode
-   TNode<T> *newLeft, *newRight, *newNode;
+    TNode<T> *newLeft, *newRight, *newNode;
 
-   // stop the recursive scan when we arrive at empty tree
-   if (t == NULL)
-      return NULL;
+    // stop the recursive scan when we arrive at empty tree
+    if (t == NULL)
+        return NULL;
 
-   // build the new tree from the bottom up by building the two
-   // subtrees and then building the parent. at node t, make
+    // build the new tree from the bottom up by building the two
+    // subtrees and then building the parent. at node t, make
     // a copy of the left subtree and assign its root node pointer
     // to newLeft. make a copy of the right subtree and assign its
     // root node pointer to newRight
-    newLeft = copyTree(t->left);
-    newRight = copyTree(t->right);
+    newLeft = CopyTree(t->left);
+    newRight = CopyTree(t->right);
 
-   // create a new node whose value is the same as the value in t
+    // create a new node whose value is the same as the value in t
     // and whose children are the copied subtrees
-   newNode = new TNode<T> (t->nodeValue, newLeft, newRight);
+    newNode = new TNode<T> (t->nodeValue, newLeft, newRight);
 
-   // return a pointer to the root of the newly copied tree
-   return newNode;
+    // return a pointer to the root of the newly copied tree
+    return newNode;
 }
 
 template <typename T>
-void deleteTree(TNode<T> *t)
+void DeleteTree(TNode<T> *t)
 {
     // PostOrder scan. delete left and right
     // subtrees of t and then node t
-   if (t != NULL)
-   {
-      deleteTree(t->left);
-      deleteTree(t->right);
-      delete t;
-   }
+    if (t != NULL)
+    {
+        DeleteTree(t->left);
+        t->left = NULL;
+
+        DeleteTree(t->right);
+        t->right = NULL;
+
+        delete t;
+    }
 }
 
 template <typename T>
-void clearTree(TNode<T> * & t)
+void ClearTree(TNode<T>* &t)
 {
-    deleteTree(t);
+    DeleteTree(t);
     t = NULL;
 }
 
