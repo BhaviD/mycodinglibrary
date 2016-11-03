@@ -68,4 +68,13 @@ class ExpressionError: public BaseException
         {}
 };
 
+// bad object reference
+class ReferenceError: public baseException
+{
+    public:
+        ReferenceError(const string& msg = ""):
+            baseException(msg)
+        {}
+};
+
 #endif
