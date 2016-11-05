@@ -2,7 +2,7 @@
 #define _MATRIX_H_
 
 #include <vector>
-#include "Exception/Exception.h"
+#include "Exception.h"
 
 template <typename T>
 class Matrix
