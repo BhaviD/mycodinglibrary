@@ -16,6 +16,25 @@ template <typename T>
 void WriteVector(const std::vector<T>& v);
 
 template <typename T>
+void WriteMatrix(const Matrix<T>& mat);
+
+template <typename T>
+void WriteList(const std::list<T>& alist, const std::string& separator = " ");
+
+// output a singly linked list with each element followed by separator
+template <typename T>
+void WriteLinkedList(Node<T> *front, const std::string& separator = " ");
+
+// output a doubly linked list with each element followed by separator
+template <typename T>
+void WriteDLinkedList(DNode<T> *header, const std::string& separator = " ");
+
+// display the search tree. follow the output of each list element
+// by separator. default value of separator = "  "
+template <typename T>
+void WriteBSTree(const BSTree<T>& t, const std::string& separator = " ");
+
+template <typename T>
 void WriteArray(const T arr[], int n)
 {
     int i;
@@ -49,7 +68,7 @@ void WriteMatrix(const Matrix<T>& mat)
 }
 
 template <typename T>
-void WriteList(const std::list<T>& alist, const std::string& separator = " ")
+void WriteList(const std::list<T>& alist, const std::string& separator)
 {
     //typename std::list<T>::const_iterator iter;
     auto iter = alist.begin();
@@ -61,7 +80,7 @@ void WriteList(const std::list<T>& alist, const std::string& separator = " ")
 
 // output a singly linked list with each element followed by separator
 template <typename T>
-void WriteLinkedList(Node<T> *front, const std::string& separator = "  ")
+void WriteLinkedList(Node<T> *front, const std::string& separator)
 {
    // front points at first Node.  curr moves through the list
    Node<T> *curr;
@@ -70,14 +89,14 @@ void WriteLinkedList(Node<T> *front, const std::string& separator = "  ")
    while (curr)    // continue until and of list
    {
       // output Node value and move to the next Node
-      cout << curr->nodeValue << separator;
+      std::cout << curr->nodeValue << separator;
       curr = curr->next;
    }
 }
 
 // output a doubly linked list with each element followed by separator
 template <typename T>
-void WriteDLinkedList(DNode<T> *header, const std::string& separator = "  ")
+void WriteDLinkedList(DNode<T> *header, const std::string& separator)
 {
    // header points at first DNode.  p moves through the list
    DNode<T> *p = header->next ;
@@ -85,9 +104,21 @@ void WriteDLinkedList(DNode<T> *header, const std::string& separator = "  ")
    while (p != header)    // continue until end of list
    {
       // output DNode value and move to the next DNode
-      cout << p->nodeValue << separator;
+      std::cout << p->nodeValue << separator;
       p = p->next;
    }
+}
+
+template <typename T>
+void WriteBSTree(const BSTree<T>& t, const std::string& separator)
+{
+    typename BSTree<T>::const_iterator iter = t.begin();
+
+    while (iter != t.end())
+    {
+        std::cout << *iter << separator;
+        ++iter;
+    }
 }
 
 #endif
