@@ -34,6 +34,12 @@ void WriteDLinkedList(DNode<T> *header, const std::string& separator = " ");
 template <typename T>
 void WriteBSTree(const BSTree<T>& t, const std::string& separator = " ");
 
+// display the elements of a container in the iterator
+// range [first, last). output separator between items.
+// default value of separator = "  "
+template <typename Iterator>
+void WriteContainer(Iterator first, Iterator last, const string& separator = "  ");
+
 template <typename T>
 void WriteArray(const T arr[], int n)
 {
@@ -118,6 +124,21 @@ void WriteBSTree(const BSTree<T>& t, const std::string& separator)
     {
         std::cout << *iter << separator;
         ++iter;
+    }
+}
+
+template <typename Iterator>
+void WriteContainer(Iterator first, Iterator last,
+                    const std::string& separator)
+{
+    // declare iterator of type Iterator and initialize it
+    // to have value first
+    Iterator iter = first;
+
+    while (iter != last)
+    {
+        std::cout << *iter << separator;
+        iter++;
     }
 }
 
