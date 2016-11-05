@@ -1,6 +1,6 @@
 SRC="simpleSpellChecker.cpp"
 
-includedir="../../../include"
+includedir="../../../../../include"
 INC="-I$includedir/WriteContainer"
 INC="$INC -I$includedir/Matrix"
 INC="$INC -I$includedir/Exception"
