@@ -6,6 +6,7 @@
 #include "Matrix.h"
 #include "Node.h"
 #include "DNode.h"
+#include "BSTree.h"
 
 // template function to output an n element array of type T
 template <typename T>
@@ -38,7 +39,7 @@ void WriteBSTree(const BSTree<T>& t, const std::string& separator = " ");
 // range [first, last). output separator between items.
 // default value of separator = "  "
 template <typename Iterator>
-void WriteContainer(Iterator first, Iterator last, const string& separator = "  ");
+void WriteContainer(Iterator first, Iterator last, const std::string& separator = "  ");
 
 template <typename T>
 void WriteArray(const T arr[], int n)
