@@ -69,11 +69,20 @@ class ExpressionError: public BaseException
 };
 
 // bad object reference
-class ReferenceError: public baseException
+class ReferenceError: public BaseException
 {
     public:
-        ReferenceError(const string& msg = ""):
-            baseException(msg)
+        ReferenceError(const std::string& msg = ""):
+            BaseException(msg)
+        {}
+};
+
+// failure to allocate memory (new() returns NULL)
+class MemoryAllocationError: public BaseException
+{
+    public:
+        MemoryAllocationError(const std::string& msg = ""):
+            BaseException(msg)
         {}
 };
 
