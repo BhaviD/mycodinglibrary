@@ -5,7 +5,8 @@
 #include <cstddef>
 #endif  // NULL
 
-#include <iomanip>      // for setw()
+#include <iomanip>      // for std::setw()
+#include <sstream>
 //#include <strstream>        // for format conversion
 #include <string>           // node data formatted as a string
 #include <queue>
@@ -33,42 +34,43 @@ class BSTNode
         {}
 };
 
-#if 0
+//#if 0
 // objects hold a formatted label string and the level,column
 // coordinates for a shadow tree node
 class tnodeShadow
 {
     public:
-        string nodeValueStr;    // formatted node value
+        std::string nodeValueStr;    // formatted node value
         int level,column;
         tnodeShadow *left, *right;
 
         tnodeShadow ()
         {}
 };
-#endif
+//#endif
 
 template <typename T>
-class BSTree
+class MBSTree
 {
     public:
 
 // include the iterator nested classes
-#include "BSTIterator.h"
+#include "MBSTIterator.h"
 
         // constructor. initialize root to NULL and size to 0
-        BSTree();
+        MBSTree();
         // constructor. insert the elements from the pointer
         // range [first, last) into the tree
-        BSTree(T *first, T *last);
+        MBSTree(T *first, T *last);
         // copy constructor
-        BSTree(const BSTree<T>& tree);
+        MBSTree(const MBSTree<T>& tree);
         // destructor
-        ~BSTree();
+        ~MBSTree();
         // assignment operator
-        BSTree<T>& operator= (const BSTree<T>& rhs);
+        MBSTree<T>& operator= (const MBSTree<T>& rhs);
 
-        // search for item. if found, return an iterator pointing
+        // search for the first occurrence of item in the tree
+        // if found, return an iterator pointing
         // at it in the tree; otherwise, return end()
         iterator find(const T& item);
         // constant version
@@ -79,20 +81,15 @@ class BSTree
         // return the number of data items in the tree
         int size() const;
             
-        // if item is not in the tree, insert it and
-        // return a std::pair whose iterator component points
-        // at item and whose bool component is true. if item
-        // is in the tree, return a std::pair whose iterator
-        // component points at the existing item and whose
-        // bool component is false
-        // Postcondition: the tree size increases by 1 if item
-        // is not in the tree
-        std::pair<iterator, bool> insert(const T& item);
+        // insert item into the tree and return an iterator
+        // positioned at the new element
+        // Postcondition: the tree size increases by 1
+        iterator insert(const T& item);
         
-        // if item is in the tree, erase it and return 1;
-        // otherwise, return 0
-        // Postcondition: the tree size decreases by 1 if
-        // item is in the tree
+        // erase all elements from the tree that match item and
+        // return the number of elements that were erased
+        // Postcondition: the tree size decreases by the number of
+        // elements erased
         int erase(const T& item);
 
         // erase the item pointed to by pos.
@@ -112,6 +109,40 @@ class BSTree
         // the number of elements in the range [first, last)
         void erase(iterator first, iterator last);
 
+        // return an iterator pointing to the first element,
+        // in order, whose value is >= item
+        // If all elements in the tree are less than item, 
+        // return end()
+        // if item is in the tree, return an iterator pointing
+        // at the first occurrence, in order, of item.
+        iterator lower_bound(const T& item);
+        // constant version
+        const_iterator lower_bound(const T& item) const;
+
+        // return an iterator pointing to the first element,
+        // in order, whose value is > item
+        // If all elements in the tree are less than or equal to item,
+        // return end().
+        // if item is in the tree, return an iterator just after
+        // the last occurrence, in order, of item.
+        iterator upper_bound(const T& item);
+        // constant version
+        const_iterator upper_bound(const T& item) const;
+
+        // return a pair of iterators whose first element is equal to
+        // lower_bound() and whose second element is equal to upper_bound()
+        std::pair<iterator, iterator> equal_range(const T& item);
+        // constant version
+        std::pair<const_iterator, const_iterator> equal_range(const T& item) const;
+
+        // count the number of items in the range [first, last)
+        int distance(iterator first, iterator last);
+        // constant version
+        int distance(const_iterator first, const_iterator last) const;
+
+        // count the number of occurrences of items in the tree.
+        int count(const T& item) const;
+
         // return an iterator pointing to the first item InOrder
         iterator begin();
         // constant version
@@ -122,12 +153,12 @@ class BSTree
         // constant version
         const_iterator end() const;
 
-        #if 0
+        //#if 0
         // tree display function. maxCharacters is the
         // largest number of characters required to draw
         // the value of a node
         void displayTree(int maxCharacters);
-        #endif
+        //#endif
 
     private:
         // pointer to tree root
@@ -149,12 +180,7 @@ class BSTree
         // operator to delete all the nodes in the tree
         void deleteTree(BSTNode<T> *t);
 
-        // search for item in the tree. if it is in the tree,
-        // return a pointer to its node; otherwise, return NULL.
-        // used by find() and erase()
-        BSTNode<T> *findNode(const T& item) const;
-
-        #if 0
+        //#if 0
         // recursive function that builds a subtree of the shadow tree
         // corresponding to node t of the tree we are drawing. level is the
         // level-coordinate for the root of the subtree, and column is the
@@ -164,11 +190,11 @@ class BSTree
         // remove the shadow tree from memory after displayTree()
         // displays the binary search tree
         void deleteShadowTree(tnodeShadow *t);
-        #endif
+        //#endif
 };
 
 template <typename T>
-BSTNode<T>* BSTree<T>::getBSTNode(const T& item, BSTNode<T> *lptr,
+BSTNode<T>* MBSTree<T>::getBSTNode(const T& item, BSTNode<T> *lptr,
                                  BSTNode<T> *rptr, BSTNode<T> *pptr)
 {
     BSTNode<T> *newNode;
@@ -176,13 +202,13 @@ BSTNode<T>* BSTree<T>::getBSTNode(const T& item, BSTNode<T> *lptr,
     // initialize the data and all pointers
     newNode = new BSTNode<T> (item, lptr, rptr, pptr);
     if (newNode == NULL)
-        throw MemoryAllocationError("BSTree: memory allocation failure");
+        throw MemoryAllocationError("MBSTree: memory allocation failure");
 
     return newNode;
 }
 
 template <typename T>
-BSTNode<T> *BSTree<T>::copyTree(BSTNode<T> *t)
+BSTNode<T> *MBSTree<T>::copyTree(BSTNode<T> *t)
 {
     BSTNode<T> *newlptr, *newrptr, *newNode;
 
@@ -215,7 +241,7 @@ BSTNode<T> *BSTree<T>::copyTree(BSTNode<T> *t)
 
 // delete the tree stored by the current object
 template <typename T>
-void BSTree<T>::deleteTree(BSTNode<T> *t)
+void MBSTree<T>::deleteTree(BSTNode<T> *t)
 {
     // if current root node is not NULL, delete its left subtree,
     // its right subtree and then the node itself
@@ -231,33 +257,12 @@ void BSTree<T>::deleteTree(BSTNode<T> *t)
     }
 }
 
-// search for data item in the tree. if found, return its node
-// address; otherwise, return NULL
 template <typename T>
-BSTNode<T>* BSTree<T>::findNode(const T& item) const
-{   
-    // cycle t through the tree starting with root
-    BSTNode<T> *t = root;
-
-    // terminate on on empty subtree
-    while(t && (item != t->nodeValue))
-    {
-        if (item < t->nodeValue)
-            t = t->left;
-        else 
-            t = t->right;
-    }
-
-    // return pointer to node; NULL if not found
-    return t;
-}
-
-template <typename T>
-BSTree<T>::BSTree(): root(NULL), treeSize(0)
+MBSTree<T>::MBSTree(): root(NULL), treeSize(0)
 {}
 
 template <typename T>
-BSTree<T>::BSTree(T *first, T *last): root(NULL), treeSize(0)
+MBSTree<T>::MBSTree(T *first, T *last): root(NULL), treeSize(0)
 {
     T *p = first;
 
@@ -270,14 +275,14 @@ BSTree<T>::BSTree(T *first, T *last): root(NULL), treeSize(0)
 }
 
 template <typename T>
-BSTree<T>::BSTree(const BSTree<T>& tree): treeSize(tree.treeSize)
+MBSTree<T>::MBSTree(const MBSTree<T>& tree): treeSize(tree.treeSize)
 {
     // copy tree to the current object
     root = copyTree(tree.root);
 }
 
 template <typename T>
-BSTree<T>::~BSTree()
+MBSTree<T>::~MBSTree()
 {
     // erase the tree nodes from memory
     deleteTree(root);
@@ -288,7 +293,7 @@ BSTree<T>::~BSTree()
 }
 
 template <typename T>
-BSTree<T>& BSTree<T>::operator= (const BSTree<T>& rhs)
+MBSTree<T>& MBSTree<T>::operator= (const MBSTree<T>& rhs)
 {
     // can't copy a tree to itself
     if (this == &rhs)
@@ -308,51 +313,39 @@ BSTree<T>& BSTree<T>::operator= (const BSTree<T>& rhs)
 }
 
 template <typename T>
-typename BSTree<T>::iterator BSTree<T>::find(const T& item)
+typename MBSTree<T>::iterator MBSTree<T>::find(const T& item)
 {
-    BSTNode<T> *curr;
-
-    // search tree for item
-    curr = findNode (item);
-
-    // if item found, return const_iterator with value current;
-    // otherwise, return end()
-    if (curr != NULL)
-        return iterator(curr, this);
+    iterator lb = lower_bound(item);
+    if(lb != end() && *lb == item)
+        return lb;
     else
         return end();
 }
 
 template <typename T>
-typename BSTree<T>::const_iterator BSTree<T>::find(const T& item) const
+typename MBSTree<T>::const_iterator MBSTree<T>::find(const T& item) const
 {
-    BSTNode<T> *curr;
-
-    // search tree for item
-    curr = findNode (item);
-
-    // if item found, return const_iterator with value current;
-    // otherwise, return end()
-    if (curr != NULL)
-        return const_iterator(curr, this);
+    const_iterator lb = lower_bound(item);
+    if(lb != end() && *lb == item)
+        return lb;
     else
         return end();
 }
 
 template <typename T>
-int BSTree<T>::empty() const
+int MBSTree<T>::empty() const
 {
     return root == NULL;
 }
 
 template <typename T>
-int BSTree<T>::size() const
+int MBSTree<T>::size() const
 {
     return treeSize;
 }
 
 template <typename T>
-std::pair<typename BSTree<T>::iterator, bool> BSTree<T>::insert(const T& item)
+typename MBSTree<T>::iterator MBSTree<T>::insert(const T& item)
 {
     // t is current node in traversal, parent the previous node
     BSTNode<T> *t = root, *parent = NULL, *newNode;
@@ -362,19 +355,16 @@ std::pair<typename BSTree<T>::iterator, bool> BSTree<T>::insert(const T& item)
     {
         // update the parent pointer. then go left or right
         parent = t;
-        // if a match occurs, return a std::pair whose iterator
-        // component points at item in the tree and whose
-        // bool component is false
-        if (item == t->nodeValue)
-            return std::pair<iterator, bool> (iterator(t, this), false);
-        else if (item < t->nodeValue)
-            t = t->left;
-        else 
+        // insert a duplicate value on the right subtree of an
+        // earlier occurrence of "item"
+        if (item >= t->nodeValue)
             t = t->right;
+        else 
+            t = t->left;
     }
     
     // create the new leaf node
-    newNode = getBSTNode(item,NULL,NULL,parent);
+    newNode = getBSTNode(item, NULL, NULL, parent);
 
     // if parent is NULL, insert as root node
     if (parent == NULL)
@@ -389,13 +379,13 @@ std::pair<typename BSTree<T>::iterator, bool> BSTree<T>::insert(const T& item)
     // increment size
     treeSize++;
 
-    // return an std::pair whose iterator component points at
-    // the new node and whose bool component is true
-    return std::pair<iterator, bool> (iterator(newNode, this), true);
+    // return an iterator that points at
+    // the new node 
+    return iterator(newNode, this);
 }
 
 template <typename T>
-void BSTree<T>::erase(iterator pos)
+void MBSTree<T>::erase(iterator pos)
 {
     // dNodePtr = pointer to node D that is deleted
     // pNodePtr = pointer to parent P of node D
@@ -403,10 +393,10 @@ void BSTree<T>::erase(iterator pos)
     BSTNode<T> *dNodePtr = pos.nodePtr, *pNodePtr, *rNodePtr;
 
     if (treeSize == 0)
-        throw UnderflowError("BSTree erase(): tree is empty");
+        throw UnderflowError("MBSTree erase(): tree is empty");
 
     if (dNodePtr == NULL)
-        throw ReferenceError("BSTree erase(): invalid iterator");
+        throw ReferenceError("MBSTree erase(): invalid iterator");
 
     // assign pNodePtr the address of P
     pNodePtr = dNodePtr->parent;
@@ -501,26 +491,20 @@ void BSTree<T>::erase(iterator pos)
 }
 
 template <typename T>
-int BSTree<T>::erase(const T& item)
+int MBSTree<T>::erase(const T& item)
 {
-    int numberErased = 1;
-    // search tree for item
-    BSTNode<T> *p  = findNode(item);
+    std::pair<iterator, iterator> eq_range = equal_range(item);
+    int numErased = distance(eq_range.first, eq_range.second);
 
-    // if item found, delete the node
-    if (p)
-        erase(iterator(p,this));
-    else
-        numberErased = 0;
-
-    return numberErased;
+    erase(eq_range.first, eq_range.second);
+    return numErased;
 }
 
 template <typename T>
-void BSTree<T>::erase(iterator first, iterator last)
+void MBSTree<T>::erase(iterator first, iterator last)
 {
     if (treeSize == 0)
-        throw UnderflowError("BSTree erase(): tree is empty");
+        throw UnderflowError("MBSTree erase(): tree is empty");
 
     iterator p = first;
 
@@ -541,7 +525,168 @@ void BSTree<T>::erase(iterator first, iterator last)
 }
 
 template <typename T>
-typename BSTree<T>::iterator BSTree<T>::begin()
+typename MBSTree<T>::iterator MBSTree<T>::lower_bound(const T& item)
+{
+    BSTNode<T> *curr = root, *lb = NULL;
+
+    // cycle until we find an empty subtree
+    while(curr)
+    {
+        if(curr->nodeValue >= item)
+        {
+            // record curr as a possible lower bound
+            // and move to the left to look for an even
+            // smaller one
+            lb = curr;
+            curr = curr->left;
+        }
+        else
+            curr = curr->right;
+    }
+
+    if(lb)
+        return iterator(lb, this);
+    else
+        return end();
+}
+
+template <typename T>
+typename MBSTree<T>::const_iterator MBSTree<T>::lower_bound(const T& item) const
+{
+    BSTNode<T> *curr = root, *lb = NULL;
+
+    // cycle until we find an empty subtree
+    while(curr)
+    {
+        if(curr->nodeValue >= item)
+        {
+            // record curr as a possible lower bound
+            // and move to the left to look for an even
+            // smaller one
+            lb = curr;
+            curr = curr->left;
+        }
+        else
+            curr = curr->right;
+    }
+
+    if(lb)
+        return const_iterator(lb, this);
+    else
+        return end();
+}
+
+template <typename T>
+typename MBSTree<T>::iterator MBSTree<T>::upper_bound(const T& item)
+{
+    BSTNode<T> *curr = root, *ub = NULL;
+
+    // cycle until we find an empty subtree
+    while(curr)
+    {
+        if(curr->nodeValue > item)
+        {
+            // record curr as a possible upper bound
+            // and move to the left to look for an even
+            // smaller one
+            ub = curr;
+            curr = curr->left;
+        }
+        else
+            curr = curr->right;
+    }
+
+    if(ub)
+        return iterator(ub, this);
+    else
+        return end();
+}
+
+template <typename T>
+typename MBSTree<T>::const_iterator MBSTree<T>::upper_bound(const T& item) const
+{
+    BSTNode<T> *curr = root, *ub = NULL;
+
+    // cycle until we find an empty subtree
+    while(curr)
+    {
+        if(curr->nodeValue > item)
+        {
+            // record curr as a possible upper bound
+            // and move to the left to look for an even
+            // smaller one
+            ub = curr;
+            curr = curr->left;
+        }
+        else
+            curr = curr->right;
+    }
+
+    if(ub)
+        return const_iterator(ub, this);
+    else
+        return end();
+}
+
+template <typename T>
+std::pair<typename MBSTree<T>::iterator, 
+          typename MBSTree<T>::iterator> 
+MBSTree<T>::equal_range(const T& item)
+{
+    iterator lb = lower_bound(item);
+    iterator ub = upper_bound(item);
+
+    return std::pair<iterator, iterator> (lb, ub);
+}
+
+template <typename T>
+std::pair<typename MBSTree<T>::const_iterator, 
+          typename MBSTree<T>::const_iterator>
+MBSTree<T>::equal_range(const T& item) const
+{
+    const_iterator lb = lower_bound(item);
+    const_iterator ub = upper_bound(item);
+
+    return std::pair<const_iterator, const_iterator> (lb, ub);
+}
+
+template <typename T>
+int MBSTree<T>::distance(iterator first, iterator last)
+{
+    int numInRange = 0;
+    iterator iter = first;
+    while(iter != last)
+    {
+        ++iter;
+        ++numInRange;
+    }
+
+    return numInRange;
+}
+
+template <typename T>
+int MBSTree<T>::distance(const_iterator first, const_iterator last) const
+{
+    int numInRange = 0;
+    const_iterator iter = first;
+    while(iter != last)
+    {
+        ++iter;
+        ++numInRange;
+    }
+
+    return numInRange;
+}
+
+template <typename T>
+int MBSTree<T>::count(const T& item) const
+{
+    std::pair<const_iterator, const_iterator> eq_range = equal_range(item);
+    return distance(eq_range.first, eq_range.second);
+}
+
+template <typename T>
+typename MBSTree<T>::iterator MBSTree<T>::begin()
 {
     BSTNode<T> *curr = root;
 
@@ -556,7 +701,7 @@ typename BSTree<T>::iterator BSTree<T>::begin()
 }
 
 template <typename T>
-typename BSTree<T>::const_iterator BSTree<T>::begin() const
+typename MBSTree<T>::const_iterator MBSTree<T>::begin() const
 {
     const BSTNode<T> *curr = root;
 
@@ -571,29 +716,30 @@ typename BSTree<T>::const_iterator BSTree<T>::begin() const
 }
 
 template <typename T>
-typename BSTree<T>::iterator BSTree<T>::end()
+typename MBSTree<T>::iterator MBSTree<T>::end()
 {
     // end indicated by an iterator with NULL BSTNode pointer
     return iterator(NULL, this);
 }
 
 template <typename T>
-typename BSTree<T>::const_iterator BSTree<T>::end() const
+typename MBSTree<T>::const_iterator MBSTree<T>::end() const
 {
     // end indicated by an iterator with NULL BSTNode pointer
     return const_iterator(NULL, this);
 }
 
-#if 0
+//#if 0
 // recursive inorder scan used to build the shadow tree
 template <typename T>
-tnodeShadow *BSTree<T>::buildShadowTree(BSTNode<T> *t, int level, int& column)
+tnodeShadow *MBSTree<T>::buildShadowTree(BSTNode<T> *t, int level, int& column)
 {
     // pointer to new shadow tree node
     tnodeShadow *newNode = NULL;
-    // text and ostr used to perform format conversion
-    char text[80];
-    ostrstream ostr(text,80);
+    // ostr used to perform format conversion
+    //char text[80];
+    //std::ostringstream ostr(text,80);
+    std::ostringstream ostr;
 
     if (t != NULL)
     {
@@ -605,8 +751,8 @@ tnodeShadow *BSTree<T>::buildShadowTree(BSTNode<T> *t, int level, int& column)
         newNode->left = newLeft;
 
         // initialize data members of the new node
-        ostr << t->nodeValue << ends;   // format conversion
-        newNode->nodeValueStr = text;
+        ostr << t->nodeValue << std::ends;   // format conversion
+        newNode->nodeValueStr = ostr.str();
         newNode->level = level;
         newNode->column = column;
 
@@ -622,9 +768,9 @@ tnodeShadow *BSTree<T>::buildShadowTree(BSTNode<T> *t, int level, int& column)
 }
 
 template <typename T>
-void BSTree<T>::displayTree(int maxCharacters)
+void MBSTree<T>::displayTree(int maxCharacters)
 {
-    string label;
+    std::string label;
     int level = 0, column = 0;
     int colWidth = maxCharacters + 1;
     // 
@@ -641,7 +787,7 @@ void BSTree<T>::displayTree(int maxCharacters)
 
    // store siblings of each tnodeShadow object in a queue so that
     // they are visited in order at the next level of the tree
-   queue<tnodeShadow *> q;
+   std::queue<tnodeShadow *> q;
 
    // insert the root in the queue and set current level to 0
    q.push(shadowRoot);
@@ -658,7 +804,7 @@ void BSTree<T>::displayTree(int maxCharacters)
         {
             currLevel = currNode->level;
             currCol = 0;
-            cout << endl;
+            std::cout << std::endl;
         }
 
         // if a left child exists, insert the child in the queue
@@ -672,20 +818,20 @@ void BSTree<T>::displayTree(int maxCharacters)
         // output formatted node label
         if (currNode->column > currCol)
         {
-            cout << setw((currNode->column-currCol)*colWidth) << " ";
+            std::cout << std::setw((currNode->column-currCol)*colWidth) << " ";
             currCol = currNode->column;
         }
-        cout << setw(colWidth) << currNode->nodeValueStr;
+        std::cout << std::setw(colWidth) << currNode->nodeValueStr;
         currCol++;
    }
-    cout << endl;
+    std::cout << std::endl;
 
     // delete the shadow tree
     deleteShadowTree(shadowRoot);
 }
 
 template <typename T>
-void BSTree<T>::deleteShadowTree(tnodeShadow *t)
+void MBSTree<T>::deleteShadowTree(tnodeShadow *t)
 {
     // if current root node is not NULL, delete its left subtree,
     // its right subtree and then the node itself
@@ -696,6 +842,6 @@ void BSTree<T>::deleteShadowTree(tnodeShadow *t)
         delete t;
     }
 }
-#endif
+//#endif
 
 #endif  // BINARY_SEARCH_TREE_CLASS

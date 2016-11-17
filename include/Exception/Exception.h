@@ -31,13 +31,12 @@ class IndexRangeError: public BaseException
         IndexRangeError(const std::string& msg, int i, int size):
             BaseException()
         {
-            std::string indexString;
             std::ostringstream indexErr;
 
             indexErr << msg << "  index " << i << "  size = " << size << std::ends;
             // IndexRangeError can modify msgString, since it is in
             // the protected section of BaseException
-            msgString = indexString;
+            msgString = indexErr.str();
         }
 };
 
