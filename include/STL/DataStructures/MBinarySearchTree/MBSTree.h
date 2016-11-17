@@ -6,9 +6,8 @@
 #endif  // NULL
 
 #include <iomanip>      // for std::setw()
-#include <sstream>
-//#include <strstream>        // for format conversion
-#include <string>           // node data formatted as a string
+#include <sstream>      // for format conversion    
+#include <string>       // node data formatted as a string
 #include <queue>
 #include <utility>      // std::pair class
 
