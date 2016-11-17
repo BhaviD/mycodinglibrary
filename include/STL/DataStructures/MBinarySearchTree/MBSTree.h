@@ -33,7 +33,6 @@ class BSTNode
         {}
 };
 
-//#if 0
 // objects hold a formatted label string and the level,column
 // coordinates for a shadow tree node
 class tnodeShadow
@@ -46,7 +45,6 @@ class tnodeShadow
         tnodeShadow ()
         {}
 };
-//#endif
 
 template <typename T>
 class MBSTree
@@ -152,12 +150,10 @@ class MBSTree
         // constant version
         const_iterator end() const;
 
-        //#if 0
         // tree display function. maxCharacters is the
         // largest number of characters required to draw
         // the value of a node
         void displayTree(int maxCharacters);
-        //#endif
 
     private:
         // pointer to tree root
@@ -179,7 +175,6 @@ class MBSTree
         // operator to delete all the nodes in the tree
         void deleteTree(BSTNode<T> *t);
 
-        //#if 0
         // recursive function that builds a subtree of the shadow tree
         // corresponding to node t of the tree we are drawing. level is the
         // level-coordinate for the root of the subtree, and column is the
@@ -189,7 +184,6 @@ class MBSTree
         // remove the shadow tree from memory after displayTree()
         // displays the binary search tree
         void deleteShadowTree(tnodeShadow *t);
-        //#endif
 };
 
 template <typename T>
@@ -728,7 +722,6 @@ typename MBSTree<T>::const_iterator MBSTree<T>::end() const
     return const_iterator(NULL, this);
 }
 
-//#if 0
 // recursive inorder scan used to build the shadow tree
 template <typename T>
 tnodeShadow *MBSTree<T>::buildShadowTree(BSTNode<T> *t, int level, int& column)
@@ -841,6 +834,5 @@ void MBSTree<T>::deleteShadowTree(tnodeShadow *t)
         delete t;
     }
 }
-//#endif
 
 #endif  // BINARY_SEARCH_TREE_CLASS
