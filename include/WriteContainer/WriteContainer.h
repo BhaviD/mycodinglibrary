@@ -150,10 +150,10 @@ void WriteContainer(Iterator first, Iterator last,
 template <typename Key, typename T>
 void WriteMap(const std::map<Key, T>& m, const std::string& separator)
 {
-    std::map<Key, T>::const_iterator iter = m.begin();
+    typename std::map<Key, T>::const_iterator iter = m.begin();
     while(iter != m.end())
     {
-        cout << (*iter).first << " " << (*iter).second << separtor;
+        std::cout << (*iter).first << " " << (*iter).second << separator;
         ++iter;
     }
 }
