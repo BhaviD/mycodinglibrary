@@ -2,6 +2,7 @@
 #define _WRITE_CONTAINER_H_
 
 #include <vector>
+#include <map>
 #include <list>
 #include "Matrix.h"
 #include "Node.h"
@@ -40,6 +41,9 @@ void WriteBSTree(const BSTree<T>& t, const std::string& separator = " ");
 // default value of separator = "  "
 template <typename Iterator>
 void WriteContainer(Iterator first, Iterator last, const std::string& separator = "  ");
+
+template <typename Key, typename T>
+void WriteMap(const std::map<Key, T>& m, const std::string& separator = " ");
 
 template <typename T>
 void WriteArray(const T arr[], int n)
@@ -140,6 +144,17 @@ void WriteContainer(Iterator first, Iterator last,
     {
         std::cout << *iter << separator;
         iter++;
+    }
+}
+
+template <typename Key, typename T>
+void WriteMap(const std::map<Key, T>& m, const std::string& separator)
+{
+    std::map<Key, T>::const_iterator iter = m.begin();
+    while(iter != m.end())
+    {
+        cout << (*iter).first << " " << (*iter).second << separtor;
+        ++iter;
     }
 }
 
