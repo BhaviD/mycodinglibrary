@@ -1,0 +1,6 @@
+In a derived class, member functions that override virtual functions in the base
+class can include the keyword virtual in their declaraion. This is not a
+requirement; the function inherits the attribute virtual from the base class. It is
+recommended that you add the keyword to the declaration, as a matter of good
+style; a programmer immediately realizes that a "virtual" form exists in the base
+class without having to check explicitly.
