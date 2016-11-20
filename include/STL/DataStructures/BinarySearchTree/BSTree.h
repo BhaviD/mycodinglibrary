@@ -52,9 +52,9 @@ template <typename T>
 class BSTree
 {
     public:
-
-// include the iterator nested classes
-#include "BSTIterator.h"
+        // iterator nested classes
+        class iterator;
+        class const_iterator;
 
         // constructor. initialize root to NULL and size to 0
         BSTree();
@@ -166,6 +166,8 @@ class BSTree
         void deleteShadowTree(tnodeShadow *t);
         #endif
 };
+
+#include "BSTIterator.h"
 
 template <typename T>
 BSTNode<T>* BSTree<T>::getBSTNode(const T& item, BSTNode<T> *lptr,

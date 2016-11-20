@@ -58,6 +58,12 @@ class video
             return lhs.filmTitle == rhs.filmTitle;
         }
 
+        // two video objects are "not equal" if they don't have the same title
+        friend bool operator!= (const video& lhs, const video& rhs)
+        {
+            return lhs.filmTitle != rhs.filmTitle;
+        }
+
         // compare video objects by comparing film titles
         friend bool operator< (const video& lhs, const video& rhs)
         {
