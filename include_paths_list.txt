@@ -1,3 +1,4 @@
+INC="$INC $includedir/STL/DataStructures/RBTree"
 INC="$INC $includedir/Hashing/HashFunctions"
 INC="$INC $includedir/Hashing/Hash"
 INC="$INC $includedir/Sorting/BubbleSort/"
