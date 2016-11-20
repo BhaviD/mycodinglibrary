@@ -1,0 +1,15 @@
+The BaseCL constructor in the initialization list executes before anything else.
+You must not omit the call to the BaseCL() and initialize base-class data members
+in the body of the constructor. If the base class has a default constructor and its
+default values are assumed, the derived class does not need to execute the
+default constructor explicitly. However, it is good practise to do so.
+
+For objects in an inheritance chain, the runtime systm calls destructors in
+the reverse order of the constructor calls. In the case of a derived object, the
+system calls the destructor for the derived class, followed by the destructor for
+the base class. Intuitively, a declaration creates the derived portion of an object
+after it creates the base portion of the object. When destroying the object, the
+runtime system destroys the derived portion first and then the base portion. If a
+derived class does not have a destructor, but the base class does, the compiler
+provides a default destructor for the derived class. This destructor destroys the
+derived-class members and executes the base-class destructor.
