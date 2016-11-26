@@ -1,0 +1,16 @@
+SRC="compare_sorts.cpp"
+includedir="-I../../../include"
+INC="$includedir/Sorting/HeapSort"
+INC="$INC $includedir/Sorting/InsertionSort"
+INC="$INC $includedir/Sorting/QuickSort"
+INC="$INC $includedir/Sorting/MergeSort"
+INC="$INC $includedir/Timer"
+INC="$INC $includedir/RandomNumber"
+INC="$INC $includedir/WriteContainer"
+INC="$INC $includedir/Matrix"
+INC="$INC $includedir/Exception"
+INC="$INC $includedir/STL/DataStructures/LinkedList"
+INC="$INC $includedir/STL/DataStructures/BinarySearchTree"
+INC="$INC $includedir/STL/DataStructures/Heap"
+
+g++ -std=c++11 $SRC $INC
