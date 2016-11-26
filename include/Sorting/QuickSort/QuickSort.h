@@ -2,6 +2,30 @@
 #define _QUICK_SORT_H_
 
 template <typename T>
+int pivotIndex(std::vector<T>& v, int first, int last);
+
+template <typename T>
+T findK(std::vector<T>& v, int first, int last, int k)
+{
+    int index;
+
+    // partition range [first,last) in v about the
+    // pivot v[index]
+    index = pivotIndex(v, first, last);
+
+    int n = v.size();
+    // if index == k, we are done. kth largest is v[k]
+    if (index == n - k)
+        return v[n - k];
+    else if(n - k < index)
+        // search in lower sublist [first,index)
+        return findK(v, first, index, k);
+    else
+        // search in upper sublist [index+1,last)
+        return findK(v, index + 1, last, k);
+}
+
+template <typename T>
 int pivotIndex(std::vector<T>& v, int first, int last)
 {
     // index for the midpoint of [first,last) and the
