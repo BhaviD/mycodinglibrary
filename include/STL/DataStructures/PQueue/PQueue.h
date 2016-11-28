@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "HeapFunctions.h"
-#include "Exceptions.h"
+#include "Exception.h"
 
 // maintain a priority queue containing elements of data type
 // T using a comparison function object of type Compare

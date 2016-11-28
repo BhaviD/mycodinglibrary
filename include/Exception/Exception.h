@@ -85,4 +85,13 @@ class MemoryAllocationError: public BaseException
         {}
 };
 
+// error in graph class
+class GraphError: public BaseException
+{
+    public:
+        GraphError(const std::string& msg = ""):
+            BaseException(msg)
+        {}
+};
+
 #endif
