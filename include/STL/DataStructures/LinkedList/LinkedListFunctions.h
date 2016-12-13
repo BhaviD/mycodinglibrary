@@ -7,6 +7,10 @@
 #include "Node.h"     // use Node class
 #include "DNode.h"    // use DNode class
 
+// *****************************
+// Doubly-linked List Functions
+// *****************************
+
 // insert a new Node with value item immediately before Node curr
 template <typename T>
 DNode<T> *insert(DNode<T> *curr, const T& item);
@@ -14,6 +18,26 @@ DNode<T> *insert(DNode<T> *curr, const T& item);
 // erase DNode pointed to by curr
 template <typename T>
 void erase(DNode<T> *curr);
+
+
+// *****************************
+// Singly-linked List Functions
+// *****************************
+
+// inserts a new node on the front of the list.
+template <typename T>
+void Push(Node<T>* &head, T data);
+
+// insert a new node after the given prevNode
+template <typename T>
+void InsertAfter(Node<T>* prevNode, T data);
+
+// appends a new node at the end of the linked list
+template <typename T>
+void Append(Node<T>* &head, T data);
+
+template <typename T>
+void PrintList(Node<T>* node);
 
 // ***********************************************************
 //      FUNCTION IMPLEMENTATIONS
