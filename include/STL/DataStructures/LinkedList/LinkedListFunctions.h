@@ -44,6 +44,15 @@ void Erase(Node<T>* &head, T key);
 template <typename T>
 void Erase(Node<T>* &head, Node<T>* curr);
 
+// count no. of nodes in linked list
+template <typename T>
+int GetCountIterative(Node<T>* head);
+
+/* Counts the no. of occurences of a node
+   (search_for) in a linked list (head) */
+template <typename T>
+int GetCountRecursive(Node<T>* head);
+
 template <typename T>
 void PrintList(Node<T>* node);
 
@@ -198,6 +207,30 @@ void Erase(Node<T>* &head, Node<T>* curr)
  
     delete temp->next;      // free memory
     temp->next = succNode;  // unlink the deleted node from list
+}
+
+template <typename T>
+int GetCountIterative(Node<T>* head)
+{
+    int count = 0;             // Initialize count
+    Node<T>* current = head;   // Initialize current
+    while (current != NULL)
+    {
+        count++;
+        current = current->next;
+    }
+    return count;
+}
+
+template <typename T>
+int GetCountRecursive(Node<T>* head)
+{
+    // Base case
+    if (head == NULL)
+        return 0;
+ 
+    // count is 1 + count of remaining list
+    return 1 + GetCountRecursive(head->next);
 }
 
 

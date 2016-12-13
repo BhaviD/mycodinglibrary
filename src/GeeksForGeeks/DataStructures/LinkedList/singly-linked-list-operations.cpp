@@ -31,6 +31,8 @@ int main()
     Erase(head, val);
     cout << "\nLinked List after Deletion of " << val << ":\n";
     PrintList(head);
+
+    cout << "\nLength of the linked list: " << GetCountRecursive(head) << endl;
  
     return 0;
 }
