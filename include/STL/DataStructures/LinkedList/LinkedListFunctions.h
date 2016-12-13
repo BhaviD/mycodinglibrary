@@ -7,9 +7,9 @@
 #include "Node.h"     // use Node class
 #include "DNode.h"    // use DNode class
 
-// *****************************
+// **********************************************************
 // Doubly-linked List Functions
-// *****************************
+// **********************************************************
 
 // insert a new Node with value item immediately before Node curr
 template <typename T>
@@ -20,9 +20,9 @@ template <typename T>
 void erase(DNode<T> *curr);
 
 
-// *****************************
+// **********************************************************
 // Singly-linked List Functions
-// *****************************
+// **********************************************************
 
 // inserts a new node on the front of the list.
 template <typename T>
@@ -35,6 +35,14 @@ void InsertAfter(Node<T>* prevNode, T data);
 // appends a new node at the end of the linked list
 template <typename T>
 void Append(Node<T>* &head, T data);
+
+// deletes the first occurrence of key in linked list
+template <typename T>
+void Erase(Node<T>* &head, T key);
+
+// delete the node at the given position
+template <typename T>
+void Erase(Node<T>* &head, Node<T>* curr);
 
 template <typename T>
 void PrintList(Node<T>* node);
@@ -80,21 +88,16 @@ void erase(DNode<T> *curr)
     delete curr;
 }
 
-/* Given a reference to the head of a list and a T, 
-   inserts a new node on the front of the list. */
 template <typename T>
 void Push(Node<T>* &head, T data)
 {
-    /* put in the data  */
-    /* Make next of new node point to head */
+    // make next of new node point to head
     Node<T>* newNode = new Node<T>(data, head);
  
-    /* move the head to point to the new node */
+    // move the head to point to the new node
     head = newNode;
 }
  
-/* Given a node prevNode, insert a new node after the given 
-   prevNode */
 template <typename T>
 void InsertAfter(Node<T>* prevNode, T data)
 {
@@ -104,42 +107,99 @@ void InsertAfter(Node<T>* prevNode, T data)
         return;
     }
  
-    /* allocate new node */
-    /* put in the data  */
-    /* Make next of new node as next of prevNode */
+    // make next of new node as next of prevNode
     Node<T>* newNode = new Node<T>(data, prevNode->next);
  
-    /* move the next of prevNode as newNode */
+    // move the next of prevNode as newNode
     prevNode->next = newNode;
 }
  
-/* Given a reference to pointer to the head
-   of a list and a T, appends a new node at the end  */
 template <typename T>
 void Append(Node<T>* &head, T data)
 {
-    /* put in the data  */
     /* This new node is going to be the last node, so make next of
-       it as NULL*/
+       it as NULL */
     Node<T>* newNode = new Node<T>(data);
- 
     Node<T> *last = head;
  
-    /* If the Linked List is empty, then make the new node as head */
+    // If the Linked List is empty, then make the new node as head
     if (head == NULL)
     {
         head = newNode;
         return;
     }
- 
-    /* Else traverse till the last node */
+    // else traverse till the last node
     while (last->next != NULL)
         last = last->next;
  
-    /* 6. Change the next of last node */
+    // change the next of last node
     last->next = newNode;
-    return;
 }
+
+template <typename T>
+void Erase(Node<T>* &head, T key)
+{
+    // Store head node
+    Node<T> *temp = head, *prev;
+ 
+    // If head node itself holds the key to be deleted
+    if (temp != NULL && temp->nodeValue == key)
+    {
+        head = temp->next;   // Changed head
+        delete temp;         // free old head
+        return;
+    }
+ 
+    // Search for the key to be deleted, keep track of the
+    // previous node as we need to change 'prev->next'
+    while (temp != NULL && temp->nodeValue != key)
+    {
+        prev = temp;
+        temp = temp->next;
+    }
+ 
+    // If key was not present in linked list
+    if (temp == NULL) return;
+ 
+    // Unlink the node from linked list
+    prev->next = temp->next;
+    delete temp;      // free memory
+}
+
+
+template <typename T>
+void Erase(Node<T>* &head, Node<T>* curr)
+{
+    // if linked list is empty
+    if (head == NULL || curr == NULL)
+      return;
+ 
+    // store head node
+    Node<T>* temp = head;
+ 
+    // if head needs to be removed
+    if (curr == head)
+    {
+        head = temp->next;   // change head
+        delete temp;         // free old head
+        return;
+    }
+    // find previous node of the node to be deleted
+    while(temp->next != curr)
+        temp = temp->next;
+ 
+    // if curr is not present in the linked list
+    if (temp == NULL)
+         return;
+ 
+    // node temp->next is the node to be deleted
+    // store pointer to the next of node to be deleted
+    Node<T> *succNode = temp->next->next;
+ 
+    delete temp->next;      // free memory
+    temp->next = succNode;  // unlink the deleted node from list
+}
+
 
 template <typename T>
 void PrintList(Node<T>* node)
