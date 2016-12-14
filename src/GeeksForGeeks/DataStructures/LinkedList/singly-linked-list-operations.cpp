@@ -5,7 +5,6 @@ using namespace std;
 
 int main()
 {
-    int val{};
     Node<int>* head = NULL;
 
     // Insert 6.  So linked list becomes 6->NULL
@@ -26,13 +25,22 @@ int main()
     cout << "\nCreated Linked List is: \n";
     PrintList(head);
 
+    int val{};
     cout << "\nEnter the value to be deleted: ";
     cin >> val;
     Erase(head, val);
     cout << "\nLinked List after Deletion of " << val << ":\n";
     PrintList(head);
-
+    
     cout << "\nLength of the linked list: " << GetCountRecursive(head) << endl;
+
+    int x{}, y{};
+    cout << "\nEnter the values to be swapped: ";
+    cin >> x >> y;
+
+    SwapNodes(head, x, y);
+    cout << "\nLinked List after swapping " << x << " and " << y << ":\n";
+    PrintList(head);
  
     return 0;
 }

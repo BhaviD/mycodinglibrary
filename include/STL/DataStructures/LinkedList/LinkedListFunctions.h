@@ -56,6 +56,10 @@ int GetCountRecursive(Node<T>* head);
 template <typename T>
 void PrintList(Node<T>* node);
 
+// swap nodes x and y in linked list by changing links
+template <typename T>
+void SwapNodes(Node<T>* &head, T x, T y);
+
 // ***********************************************************
 //      FUNCTION IMPLEMENTATIONS
 // ***********************************************************
@@ -233,6 +237,49 @@ int GetCountRecursive(Node<T>* head)
     return 1 + GetCountRecursive(head->next);
 }
 
+template <typename T>
+void SwapNodes(Node<T>* &head, T x, T y)
+{
+    // Nothing to do if x and y are same
+    if (x == y) return;
+
+    // Search for x (keep track of prevX and currX)
+    Node<T> *prevX = NULL, *currX = head;
+    while (currX && currX->nodeValue != x)
+    {
+       prevX = currX;
+       currX = currX->next;
+    }
+
+    // Search for y (keep track of prevY and currY)
+    Node<T> *prevY = NULL, *currY = head;
+    while (currY && currY->nodeValue != y)
+    {
+       prevY = currY;
+       currY = currY->next;
+    }
+
+    // If either x or y is not present, nothing to do
+    if (currX == NULL || currY == NULL)
+       return;
+
+    // If x is not head of linked list
+    if (prevX != NULL)
+       prevX->next = currY;
+    else // Else make y as new head
+       head = currY;  
+
+    // If y is not head of linked list
+    if (prevY != NULL)
+       prevY->next = currX;
+    else  // Else make x as new head
+       head = currX;
+
+    // Swap next pointers
+    Node<T> *temp = currY->next;
+    currY->next = currX->next;
+    currX->next  = temp;
+}
 
 template <typename T>
 void PrintList(Node<T>* node)
