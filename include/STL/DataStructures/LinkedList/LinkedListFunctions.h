@@ -72,6 +72,19 @@ static void SwapNodes(Node<T>* &head, T x, T y);
 template <typename T>
 static void Reverse(Node<T>* &head);
 
+/* Takes two lists sorted in increasing order, and splices
+ * their nodes together to make one big sorted list 
+**/
+template <typename T>
+static Node<T>* SortedMergeIterative(Node<T>* a, Node<T>* b);
+
+/* cleaner than iterative code.
+ * Not recommended for production code however, becuase it
+ * uses stack space proportional to the length of the lists.
+**/
+template <typename T>
+static Node<T>* SortedMergeRecursive(Node<T>* a, Node<T>* b);
+
 // ***********************************************************
 //      FUNCTION IMPLEMENTATIONS
 // ***********************************************************
@@ -352,11 +365,8 @@ static void PrintList(Node<T>* node)
 template <typename T>
 static void MoveNode(Node<T>* &dest, Node<T>* &src);
 
-/* Takes two lists sorted in increasing order, and splices
- * their nodes together to make one big sorted list 
-**/
 template <typename T>
-Node<T>* SortedMerge(Node<T>* a, Node<T>* b)
+static Node<T>* SortedMergeIterative(Node<T>* a, Node<T>* b)
 {
     // a dummy first node to hang the result on
     Node<T> dummy;
@@ -386,6 +396,32 @@ Node<T>* SortedMerge(Node<T>* a, Node<T>* b)
         tail = tail->next;
     }
     return (dummy.next);
+}
+
+template <typename T>
+static Node<T>* SortedMergeRecursive(Node<T>* a, Node<T>* b)
+{
+    Node<T>* result = NULL;
+
+    /* Base cases */
+    if (a == NULL) 
+        return (b);
+
+    if (b == NULL) 
+        return (a);
+
+    // Pick either a or b, and recur
+    if (a->nodeValue <= b->nodeValue) 
+    {
+        result = a;
+        result->next = SortedMergeRecursive(a->next, b);
+    }
+    else
+    {
+        result = b;
+        result->next = SortedMergeRecursive(a, b->next);
+    }
+    return (result);
 }
 
 template <typename T>

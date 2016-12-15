@@ -69,7 +69,7 @@ int main()
     PrintList(head2);
 
     cout << "\nMerged Linked List:";
-    head = SortedMerge(head, head2);
+    head = SortedMergeRecursive(head, head2);
     PrintList(head);
 
     return 0;
