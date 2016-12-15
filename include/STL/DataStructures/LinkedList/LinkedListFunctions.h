@@ -26,23 +26,31 @@ void erase(DNode<T> *curr);
 
 // inserts a new node on the front of the list.
 template <typename T>
-void Push(Node<T>* &head, T data);
+static void Push(Node<T>* &head, T data);
 
 // insert a new node after the given prevNode
 template <typename T>
-void InsertAfter(Node<T>* prevNode, T data);
+static void InsertAfter(Node<T>* prevNode, T data);
+
+// insert a new node after the given prevNode
+template <typename T>
+static void InsertAfter(Node<T>* prevNode, Node<T>* newNode);
 
 // appends a new node at the end of the linked list
 template <typename T>
-void Append(Node<T>* &head, T data);
+static void Append(Node<T>* &head, T data);
 
 // deletes the first occurrence of key in linked list
 template <typename T>
-void Erase(Node<T>* &head, T key);
+static void Erase(Node<T>* &head, T key);
 
 // delete the node at the given position
 template <typename T>
-void Erase(Node<T>* &head, Node<T>* curr);
+static void Erase(Node<T>* &head, Node<T>* curr);
+
+// delete all the nodes of the linked list
+template <typename T>
+static void EraseAll(Node<T>* &head);
 
 // count no. of nodes in linked list
 template <typename T>
@@ -54,11 +62,15 @@ template <typename T>
 int GetCountRecursive(Node<T>* head);
 
 template <typename T>
-void PrintList(Node<T>* node);
+static void PrintList(Node<T>* node);
 
 // swap nodes x and y in linked list by changing links
 template <typename T>
-void SwapNodes(Node<T>* &head, T x, T y);
+static void SwapNodes(Node<T>* &head, T x, T y);
+
+// reverse the linked list
+template <typename T>
+static void Reverse(Node<T>* &head);
 
 // ***********************************************************
 //      FUNCTION IMPLEMENTATIONS
@@ -102,7 +114,7 @@ void erase(DNode<T> *curr)
 }
 
 template <typename T>
-void Push(Node<T>* &head, T data)
+static void Push(Node<T>* &head, T data)
 {
     // make next of new node point to head
     Node<T>* newNode = new Node<T>(data, head);
@@ -112,7 +124,7 @@ void Push(Node<T>* &head, T data)
 }
  
 template <typename T>
-void InsertAfter(Node<T>* prevNode, T data)
+static void InsertAfter(Node<T>* prevNode, T data)
 {
     if (NULL == prevNode)
     {
@@ -126,9 +138,24 @@ void InsertAfter(Node<T>* prevNode, T data)
     // move the next of prevNode as newNode
     prevNode->next = newNode;
 }
+
+template <typename T>
+static void InsertAfter(Node<T>* prevNode, Node<T>* newNode)
+{
+    if (NULL == prevNode)
+    {
+        std::cout << "the given previous node cannot be NULL\n";
+        return;
+    }
+ 
+    // make next of new node as next of prevNode
+    newNode->next = prevNode->next;
+    // move the next of prevNode as newNode
+    prevNode->next = newNode;
+}
  
 template <typename T>
-void Append(Node<T>* &head, T data)
+static void Append(Node<T>* &head, T data)
 {
     /* This new node is going to be the last node, so make next of
        it as NULL */
@@ -150,7 +177,7 @@ void Append(Node<T>* &head, T data)
 }
 
 template <typename T>
-void Erase(Node<T>* &head, T key)
+static void Erase(Node<T>* &head, T key)
 {
     // Store head node
     Node<T> *temp = head, *prev;
@@ -181,7 +208,7 @@ void Erase(Node<T>* &head, T key)
 
 
 template <typename T>
-void Erase(Node<T>* &head, Node<T>* curr)
+static void Erase(Node<T>* &head, Node<T>* curr)
 {
     // if linked list is empty
     if (head == NULL || curr == NULL)
@@ -214,6 +241,18 @@ void Erase(Node<T>* &head, Node<T>* curr)
 }
 
 template <typename T>
+static void EraseAll(Node<T>* &head)
+{
+    Node<T>* curr = NULL;
+    while(head)
+    {
+        curr = head;
+        head = head->next;
+        delete curr;
+    }
+}
+
+template <typename T>
 int GetCountIterative(Node<T>* head)
 {
     int count = 0;             // Initialize count
@@ -238,7 +277,7 @@ int GetCountRecursive(Node<T>* head)
 }
 
 template <typename T>
-void SwapNodes(Node<T>* &head, T x, T y)
+static void SwapNodes(Node<T>* &head, T x, T y)
 {
     // Nothing to do if x and y are same
     if (x == y) return;
@@ -281,7 +320,6 @@ void SwapNodes(Node<T>* &head, T x, T y)
     currX->next  = temp;
 }
 
-// reverse the linked list
 template <typename T>
 static void Reverse(Node<T>* &head)
 {
@@ -299,14 +337,64 @@ static void Reverse(Node<T>* &head)
 
 
 template <typename T>
-void PrintList(Node<T>* node)
+static void PrintList(Node<T>* node)
 {
+    std::cout << std::endl;
     while (node != NULL)
     {
         std::cout << " " << node->nodeValue << " ";
         node = node->next;
     }
     std::cout << std::endl;
+}
+
+// pull off the front node of the source and put it in dest 
+template <typename T>
+static void MoveNode(Node<T>* &dest, Node<T>* &src);
+
+/* Takes two lists sorted in increasing order, and splices
+ * their nodes together to make one big sorted list 
+**/
+template <typename T>
+Node<T>* SortedMerge(Node<T>* a, Node<T>* b)
+{
+    // a dummy first node to hang the result on
+    Node<T> dummy;
+ 
+    // tail points to the last result node
+    // so tail is the place after new nodes are added
+    Node<T>* tail = &dummy;
+ 
+    while (1)
+    {
+        // if either list runs out, use the other list
+        if (a == NULL)
+        {
+            tail->next = b;
+            break;
+        }
+        else if (b == NULL)
+        {
+            tail->next = a;
+            break;
+        }
+        if (a->nodeValue <= b->nodeValue)
+            MoveNode(tail, a);
+        else
+            MoveNode(tail, b);
+ 
+        tail = tail->next;
+    }
+    return (dummy.next);
+}
+
+template <typename T>
+static void MoveNode(Node<T>* &dest, Node<T>* &src)
+{
+    Node<T>* newNode = src;
+    src = src->next;
+
+    InsertAfter(dest, newNode);
 }
 
 #endif   // _LINKEDLIST_FUNCTIONS_H_

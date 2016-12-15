@@ -22,14 +22,14 @@ int main()
     // Insert 8, after 7. So linked list becomes 1->7->8->6->4->NULL
     InsertAfter(head->next, 8);
 
-    cout << "\nCreated Linked List is: \n";
+    cout << "\nCreated Linked List is:";
     PrintList(head);
 
     int val{};
     cout << "\nEnter the value to be deleted: ";
     cin >> val;
     Erase(head, val);
-    cout << "\nLinked List after Deletion of " << val << ":\n";
+    cout << "\nLinked List after Deletion of " << val << ":";
     PrintList(head);
     
     cout << "\nLength of the linked list: " << GetCountRecursive(head) << endl;
@@ -39,11 +39,37 @@ int main()
     cin >> x >> y;
 
     SwapNodes(head, x, y);
-    cout << "\nLinked List after swapping " << x << " and " << y << ":\n";
+    cout << "\nLinked List after swapping " << x << " and " << y << ":";
     PrintList(head);
 
     Reverse(head);
-    cout << "\nReversed Linked List: \n";
+    cout << "\nReversed Linked List:";
+    PrintList(head);
+
+    cout << "\nErasing the linked list!!!\n";
+    EraseAll(head);
+
+    Append(head, 1);
+    Append(head, 3);
+    Append(head, 4);
+    Append(head, 18);
+    Append(head, 23);
+    Append(head, 30);
+
+    Node<int>* head2 = NULL;
+    Append(head2, 2);
+    Append(head2, 5);
+    Append(head2, 8);
+    Append(head2, 15);
+    Append(head2, 16);
+    Append(head2, 21);
+
+    cout << "\nThe Two Sorted Linked Lists are:";
+    PrintList(head);
+    PrintList(head2);
+
+    cout << "\nMerged Linked List:";
+    head = SortedMerge(head, head2);
     PrintList(head);
 
     return 0;
