@@ -41,6 +41,10 @@ int main()
     SwapNodes(head, x, y);
     cout << "\nLinked List after swapping " << x << " and " << y << ":\n";
     PrintList(head);
- 
+
+    Reverse(head);
+    cout << "\nReversed Linked List: \n";
+    PrintList(head);
+
     return 0;
 }

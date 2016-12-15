@@ -281,6 +281,23 @@ void SwapNodes(Node<T>* &head, T x, T y)
     currX->next  = temp;
 }
 
+// reverse the linked list
+template <typename T>
+static void Reverse(Node<T>* &head)
+{
+    Node<T> *prev = NULL, *current = head;
+    Node<T>* next = NULL;
+    while (current != NULL)
+    {
+        next  = current->next;  
+        current->next = prev;   
+        prev = current;
+        current = next;
+    }
+    head = prev;
+}
+
+
 template <typename T>
 void PrintList(Node<T>* node)
 {
