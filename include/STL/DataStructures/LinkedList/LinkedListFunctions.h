@@ -61,6 +61,10 @@ int GetCountIterative(Node<T>* head);
 template <typename T>
 int GetCountRecursive(Node<T>* head);
 
+// sorts the linked list by changing next pointers (not data)
+template <typename T>
+void MergeSort(Node<T>* &head);
+
 template <typename T>
 static void PrintList(Node<T>* node);
 
@@ -84,6 +88,14 @@ static Node<T>* SortedMergeIterative(Node<T>* a, Node<T>* b);
 **/
 template <typename T>
 static Node<T>* SortedMergeRecursive(Node<T>* a, Node<T>* b);
+
+/* Split the nodes of the given list into front and back halves,
+ * and return the two lists using the reference parameters.
+ * If the length is odd, the extra node should go in the front list.
+ * Uses the fast/slow pointer strategy.
+**/
+template <typename T>
+void FrontBackSplit(Node<T>* src, Node<T>* &front, Node<T>* &back);
 
 // ***********************************************************
 //      FUNCTION IMPLEMENTATIONS
@@ -348,19 +360,6 @@ static void Reverse(Node<T>* &head)
     head = prev;
 }
 
-
-template <typename T>
-static void PrintList(Node<T>* node)
-{
-    std::cout << std::endl;
-    while (node != NULL)
-    {
-        std::cout << " " << node->nodeValue << " ";
-        node = node->next;
-    }
-    std::cout << std::endl;
-}
-
 // pull off the front node of the source and put it in dest 
 template <typename T>
 static void MoveNode(Node<T>* &dest, Node<T>* &src);
@@ -431,6 +430,72 @@ static void MoveNode(Node<T>* &dest, Node<T>* &src)
     src = src->next;
 
     InsertAfter(dest, newNode);
+}
+
+// sorts the linked list by changing next pointers (not data)
+template <typename T>
+void MergeSort(Node<T>* &head)
+{
+    // Base case -- length 0 or 1
+    if ((head == NULL) || (head->next == NULL))
+    {
+        return;
+    }
+    //Node<T>* head = headRef;
+    Node<T> *a = NULL, *b = NULL;
+
+    // Split head into 'a' and 'b' sublists
+    FrontBackSplit(head, a, b); 
+
+    // Recursively sort the sublists
+    MergeSort(a);
+    MergeSort(b);
+
+    // merge the two sorted lists together
+    head = SortedMergeIterative(a, b);
+}
+
+template <typename T>
+void FrontBackSplit(Node<T>* src, Node<T>* &front, Node<T>* &back)
+{
+    front = src;
+    Node<T> *fast = NULL, *slow = NULL;
+    if (src == NULL || src->next == NULL)
+    {
+        // length < 2 cases
+        back = NULL;
+    }
+    else
+    {
+        slow = src;
+        fast = src->next;
+
+        // Advance 'fast' two nodes, and advance 'slow' one node
+        while (fast != NULL)
+        {
+            fast = fast->next;
+            if (fast != NULL)
+            {
+                slow = slow->next;
+                fast = fast->next;
+            }
+        }
+        // 'slow' is before the midpoint in the list
+        back = slow->next;
+        slow->next = NULL;
+    } 
+}
+
+template <typename T>
+static void PrintList(Node<T>* node)
+{
+    std::cout << std::endl;
+    while (node != NULL)
+    {
+        std::cout << " " << node->nodeValue << " ";
+        node = node->next;
+    }
+    std::cout << std::endl;
 }
 
 #endif   // _LINKEDLIST_FUNCTIONS_H_

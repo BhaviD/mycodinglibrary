@@ -49,21 +49,26 @@ int main()
     cout << "\nErasing the linked list!!!\n";
     EraseAll(head);
 
-    Append(head, 1);
     Append(head, 3);
-    Append(head, 4);
-    Append(head, 18);
+    Append(head, 1);
     Append(head, 23);
+    Append(head, 4);
     Append(head, 30);
+    Append(head, 18);
 
     Node<int>* head2 = NULL;
-    Append(head2, 2);
-    Append(head2, 5);
     Append(head2, 8);
+    Append(head2, 2);
     Append(head2, 15);
-    Append(head2, 16);
     Append(head2, 21);
+    Append(head2, 16);
+    Append(head2, 5);
 
+    cout << "\nThe Two Un-Sorted Linked Lists are:";
+    PrintList(head);
+    PrintList(head2);
+    MergeSort(head);
+    MergeSort(head2);
     cout << "\nThe Two Sorted Linked Lists are:";
     PrintList(head);
     PrintList(head2);
