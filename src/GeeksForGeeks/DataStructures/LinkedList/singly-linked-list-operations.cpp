@@ -77,5 +77,12 @@ int main()
     head = SortedMergeRecursive(head, head2);
     PrintList(head);
 
+    int k{};
+    cout << "\nEnter the size of groups to be reversed: ";
+    cin >> k;
+    head = Reverse(head, k);
+    cout << "\nReversed Linked List:";
+    PrintList(head);
+
     return 0;
 }

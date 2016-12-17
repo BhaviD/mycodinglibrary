@@ -61,13 +61,6 @@ int GetCountIterative(Node<T>* head);
 template <typename T>
 int GetCountRecursive(Node<T>* head);
 
-// sorts the linked list by changing next pointers (not data)
-template <typename T>
-void MergeSort(Node<T>* &head);
-
-template <typename T>
-static void PrintList(Node<T>* node);
-
 // swap nodes x and y in linked list by changing links
 template <typename T>
 static void SwapNodes(Node<T>* &head, T x, T y);
@@ -75,6 +68,12 @@ static void SwapNodes(Node<T>* &head, T x, T y);
 // reverse the linked list
 template <typename T>
 static void Reverse(Node<T>* &head);
+
+/* Reverses the linked list in groups of size k and returns the 
+ * pointer to the new head node. 
+**/
+template <typename T>
+static Node<T>* Reverse (Node<T>* head, int k);
 
 /* Takes two lists sorted in increasing order, and splices
  * their nodes together to make one big sorted list 
@@ -96,6 +95,13 @@ static Node<T>* SortedMergeRecursive(Node<T>* a, Node<T>* b);
 **/
 template <typename T>
 void FrontBackSplit(Node<T>* src, Node<T>* &front, Node<T>* &back);
+
+// sorts the linked list by changing next pointers (not data)
+template <typename T>
+static void MergeSort(Node<T>* &head);
+
+template <typename T>
+static void PrintList(Node<T>* node);
 
 // ***********************************************************
 //      FUNCTION IMPLEMENTATIONS
@@ -360,6 +366,32 @@ static void Reverse(Node<T>* &head)
     head = prev;
 }
 
+template <typename T>
+static Node<T>* Reverse (Node<T>* head, int k)
+{
+    Node<T> *current = head, *next = NULL, *prev = NULL;
+    int count = 0;
+     
+    // reverse first k nodes of the linked list
+    while (current != NULL && count < k)
+    {
+        next  = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+        count++;
+    }
+     
+    /* next is now a pointer to (k + 1) th node 
+       Recursively call for the list starting from current.
+       And make rest of the list as next of first node */
+    if (next !=  NULL)
+       head->next = Reverse(next, k); 
+ 
+    // prev is new head of the input list
+    return prev;
+}
+
 // pull off the front node of the source and put it in dest 
 template <typename T>
 static void MoveNode(Node<T>* &dest, Node<T>* &src);
@@ -434,7 +466,7 @@ static void MoveNode(Node<T>* &dest, Node<T>* &src)
 
 // sorts the linked list by changing next pointers (not data)
 template <typename T>
-void MergeSort(Node<T>* &head)
+static void MergeSort(Node<T>* &head)
 {
     // Base case -- length 0 or 1
     if ((head == NULL) || (head->next == NULL))
